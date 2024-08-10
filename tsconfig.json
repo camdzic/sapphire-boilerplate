@@ -5,9 +5,14 @@
     "@sapphire/ts-config/decorators"
   ],
   "compilerOptions": {
+    "baseUrl": "src",
     "rootDir": "src",
     "outDir": "dist",
-    "tsBuildInfoFile": "dist/.tsbuildinfo"
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "paths": {
+      "#lib/*": ["structures/lib/*"]
+    },
+    "plugins": [{ "transform": "typescript-transform-paths" }]
   },
   "include": ["src"]
 }

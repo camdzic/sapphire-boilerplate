@@ -1,12 +1,12 @@
 {
   "name": "sapphire-boilerplate",
   "description": "A simple boilerplate for Sapphire framework",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "commonjs",
   "main": "dist/index.js",
   "scripts": {
     "clear": "rm -rf dist",
-    "build": "pnpm run clear && tsc",
+    "build": "pnpm run clear && tspc",
     "start": "node .",
     "dev": "pnpm run build && pnpm run start",
     "format": "prettier --write \"src/\"",
@@ -25,10 +25,12 @@
     "husky": "^9.1.4",
     "lint-staged": "^15.2.8",
     "prettier": "^3.3.3",
-    "typescript": "~5.4.5"
+    "ts-patch": "^3.2.1",
+    "typescript": "~5.4.5",
+    "typescript-transform-paths": "^3.4.10"
   },
   "lint-staged": {
-    "*.ts": [
+    "src/**/*.ts": [
       "pnpm run format"
     ]
   }

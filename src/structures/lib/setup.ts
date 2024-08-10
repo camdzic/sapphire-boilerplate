@@ -5,7 +5,7 @@ import {
 } from '@sapphire/framework';
 import '@sapphire/plugin-logger/register';
 import { setup } from '@skyra/env-utilities';
-import { rootDir } from './constants';
+import { rootDir } from '#lib/constants';
 
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
   RegisterBehavior.BulkOverwrite

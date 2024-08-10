@@ -10,7 +10,7 @@ module.exports = {
   semi: true,
   singleQuote: true,
 
-  importOrder: ['^[^@.]', '^@', '^\\.'],
+  importOrder: ['^[^@.#]', '^@', '^#', '^\\.'],
   importOrderSortSpecifiers: true,
   importOrderParserPlugins: ['typescript', 'decorators'],
   plugins: ['@trivago/prettier-plugin-sort-imports']

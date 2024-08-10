@@ -1,6 +1,6 @@
 import { GatewayIntentBits } from 'discord.js';
 import { LogLevel, SapphireClient } from '@sapphire/framework';
-import './structures/lib/setup';
+import '#lib/setup';
 
 const client = new SapphireClient({
   intents: [GatewayIntentBits.Guilds],
