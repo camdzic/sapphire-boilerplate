@@ -1,0 +1,27 @@
+{
+  "name": "sapphire-boilerplate",
+  "description": "A simple boilerplate for Sapphire framework",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "clear": "rm -rf dist",
+    "build": "npm run clear && tsc",
+    "start": "node .",
+    "dev": "npm run build && npm run start",
+    "format": "prettier --write \"src/\""
+  },
+  "dependencies": {
+    "@sapphire/decorators": "^6.1.0",
+    "@sapphire/framework": "^5.2.1",
+    "@sapphire/plugin-logger": "^4.0.2",
+    "@skyra/env-utilities": "^1.3.0",
+    "discord.js": "^14.15.3"
+  },
+  "devDependencies": {
+    "@sapphire/ts-config": "^5.0.1",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "prettier": "^3.3.3",
+    "typescript": "~5.4.5"
+  }
+}
