@@ -1,9 +1,9 @@
 import { blue, white } from 'colorette';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Listener, StoreRegistryValue } from '@sapphire/framework';
+import { Events, Listener, StoreRegistryValue } from '@sapphire/framework';
 
 @ApplyOptions<Listener.Options>({ once: true })
-export class ReadyListener extends Listener {
+export class ClientReadyListener extends Listener<typeof Events.ClientReady> {
   override run() {
     this.printStoreDebugInformation();
   }
