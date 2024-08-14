@@ -1,5 +1,5 @@
-import { ApplyOptions } from '@sapphire/decorators';
-import { Command } from '@sapphire/framework';
+import { ApplyOptions } from "@sapphire/decorators";
+import { Command } from "@sapphire/framework";
 
 @ApplyOptions<Command.Options>({
   description: 'Replies with "Pong!"'
@@ -16,7 +16,7 @@ export class PingCommand extends Command {
     interaction: Command.ChatInputCommandInteraction
   ) {
     const pingMessage = await interaction.reply({
-      content: 'Pong!'
+      content: "Pong!"
     });
 
     return interaction.editReply({

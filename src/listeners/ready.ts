@@ -1,6 +1,6 @@
-import { blue, white } from 'colorette';
-import { ApplyOptions } from '@sapphire/decorators';
-import { Events, Listener, StoreRegistryValue } from '@sapphire/framework';
+import { blue, white } from "colorette";
+import { ApplyOptions } from "@sapphire/decorators";
+import { Events, Listener, StoreRegistryValue } from "@sapphire/framework";
 
 @ApplyOptions<Listener.Options>({ once: true })
 export class ClientReadyListener extends Listener<typeof Events.ClientReady> {
@@ -22,7 +22,7 @@ export class ClientReadyListener extends Listener<typeof Events.ClientReady> {
 
   private styleStore(store: StoreRegistryValue, last: boolean) {
     return white(
-      `${last ? '└─' : '├─'} Loaded ${blue(store.size.toString().padEnd(3, ' '))} ${store.name}.`
+      `${last ? "└─" : "├─"} Loaded ${blue(store.size.toString().padEnd(3, " "))} ${store.name}.`
     );
   }
 }

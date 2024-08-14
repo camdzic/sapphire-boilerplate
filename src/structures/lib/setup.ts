@@ -1,14 +1,14 @@
-import { join } from 'path';
+import { join } from "path";
 import {
   ApplicationCommandRegistries,
   RegisterBehavior
-} from '@sapphire/framework';
-import '@sapphire/plugin-logger/register';
-import { setup } from '@skyra/env-utilities';
-import { rootDir } from '#lib/constants';
+} from "@sapphire/framework";
+import "@sapphire/plugin-logger/register";
+import { setup } from "@skyra/env-utilities";
+import { rootDir } from "#lib/constants";
 
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
   RegisterBehavior.BulkOverwrite
 );
 
-setup({ path: join(rootDir, '.env') });
+setup({ path: join(rootDir, ".env") });
