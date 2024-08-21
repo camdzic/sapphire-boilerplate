@@ -7,4 +7,4 @@ This boilerplate is bootstrapped from the [Sapphire CLI](https://sapphirejs.dev/
 Thank you to the following projects for making this possible:
 
 - [Sapphire](https://sapphirejs.dev/)
-- [discord.js](https://discord.js.org)
+- [discord.js](https://discord.js.org/)
