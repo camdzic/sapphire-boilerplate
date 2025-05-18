@@ -1,7 +1,7 @@
 import './lib/register';
 
-import { SapphireClient, container } from '@sapphire/framework';
 import { GatewayIntentBits } from 'discord.js';
+import { SapphireClient, container } from '@sapphire/framework';
 
 const client = new SapphireClient({
   intents: [GatewayIntentBits.Guilds],
