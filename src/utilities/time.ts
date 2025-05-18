@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Duration, DurationFormatter } from '@sapphire/duration';
 import { Utility } from '@sapphire/plugin-utilities-store';
+import { Duration, DurationFormatter } from '@sapphire/duration';
 
 @ApplyOptions<Utility.Options>({})
 export class TimeUtility extends Utility {
