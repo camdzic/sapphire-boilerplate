@@ -1,0 +1,33 @@
+{
+  "name": "sapphire-boilerplate",
+  "description": "A simple boilerplate for the Sapphire framework - a framework for building Discord bots",
+  "author": {
+    "name": "Aldin Čamdžić",
+    "email": "acamdzic0@proton.me"
+  },
+  "license": "CC BY-NC 4.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun run --watch src/index.ts",
+    "biome": "biome check --write --unsafe"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "^1.2.13",
+    "lefthook": "^1.11.13",
+    "prisma": "^6.8.2"
+  },
+  "peerDependencies": {
+    "typescript": "5.7.3"
+  },
+  "dependencies": {
+    "@kingsworld/plugin-cron": "^3.0.4",
+    "@sapphire/decorators": "^6.1.1",
+    "@sapphire/framework": "^5.3.5",
+    "@sapphire/plugin-logger": "^4.0.2",
+    "@sapphire/plugin-utilities-store": "^2.0.3",
+    "discord.js": "^14.19.3",
+    "zod": "^3.24.4"
+  }
+}
