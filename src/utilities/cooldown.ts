@@ -1,5 +1,5 @@
-import { ApplyOptions } from '@sapphire/decorators';
 import { Utility } from '@sapphire/plugin-utilities-store';
+import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<Utility.Options>({})
 export class CooldownUtility extends Utility {
