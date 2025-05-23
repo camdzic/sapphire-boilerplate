@@ -8,7 +8,7 @@ import { blue, gray } from 'colorette';
 
 @ApplyOptions<Listener.Options>({ once: true })
 export class BotListener extends Listener<typeof Events.ClientReady> {
-  run() {
+  override run() {
     this.printStoreDebugInformation();
   }
 
