@@ -41,6 +41,9 @@
       },
       "suspicious": {
         "useAwait": "error"
+      },
+      "complexity": {
+        "noStaticOnlyClass": "off"
       }
     }
   }
