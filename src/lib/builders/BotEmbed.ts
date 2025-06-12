@@ -1,7 +1,6 @@
 import { container } from '@sapphire/framework';
 import { EmbedBuilder } from 'discord.js';
 
-// biome-ignore lint:
 export class BotEmbed {
   static primary() {
     return new EmbedBuilder().setColor(container.config.colors.primary);
