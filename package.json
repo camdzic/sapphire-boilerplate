@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@kingsworld/plugin-cron": "^3.0.5",
-    "@sapphire/decorators": "^6.1.1",
+    "@sapphire/decorators": "^6.2.0",
     "@sapphire/framework": "^5.3.6",
     "@sapphire/plugin-logger": "^4.0.2",
     "@sapphire/plugin-utilities-store": "^2.0.3",
     "discord.js": "^14.19.3",
-    "zod": "^3.25.56"
+    "zod": "^3.25.62"
   }
 }
