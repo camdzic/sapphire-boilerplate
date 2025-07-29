@@ -14,9 +14,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@types/bun": "^1.2.16",
-    "lefthook": "^1.11.14",
-    "prisma": "^6.10.1"
+    "@types/bun": "^1.2.19",
+    "lefthook": "^1.12.2",
+    "prisma": "^6.12.0"
   },
   "peerDependencies": {
     "typescript": "5.7.3"
@@ -25,9 +25,9 @@
     "@kingsworld/plugin-cron": "^3.0.5",
     "@sapphire/decorators": "^6.2.0",
     "@sapphire/framework": "^5.3.6",
-    "@sapphire/plugin-logger": "^4.0.2",
+    "@sapphire/plugin-logger": "^4.1.0",
     "@sapphire/plugin-utilities-store": "^2.0.3",
-    "discord.js": "^14.20.0",
-    "zod": "^3.25.67"
+    "discord.js": "^14.21.0",
+    "zod": "^3.25.76"
   }
 }
