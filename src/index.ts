@@ -1,6 +1,6 @@
 import './lib/register';
 
-import { SapphireClient, container } from '@sapphire/framework';
+import { SapphireClient } from '@sapphire/framework';
 import { GatewayIntentBits } from 'discord.js';
 
 const client = new SapphireClient({
@@ -10,4 +10,4 @@ const client = new SapphireClient({
   }
 });
 
-await client.login(container.config.token);
+await client.login();

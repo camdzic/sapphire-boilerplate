@@ -14,7 +14,7 @@ export class CooldownUtility extends Utility {
     });
   }
 
-  async get(key: string) {
+  async check(key: string) {
     const cooldownDoc = await this.container.prisma.cooldown.findUnique({
       where: { key }
     });

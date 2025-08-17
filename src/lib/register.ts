@@ -13,7 +13,7 @@ import {
 
 container.prisma = new PrismaClient();
 
-ApplicationCommandRegistries.setDefaultGuildIds([container.config.guildId]);
+ApplicationCommandRegistries.setDefaultGuildIds([process.env.GUILD_ID]);
 ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
   RegisterBehavior.BulkOverwrite
 );
