@@ -7,10 +7,7 @@ export class EmbedUtility extends Utility {
   private readonly colors = this.container.config.colors;
 
   base(title: string, description: string, color = this.colors.primary) {
-    return new EmbedBuilder()
-      .setTitle(title)
-      .setDescription(description)
-      .setColor(color);
+    return new EmbedBuilder().setTitle(title).setDescription(description).setColor(color);
   }
 
   primary() {

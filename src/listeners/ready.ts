@@ -1,9 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import {
-  type Events,
-  Listener,
-  type StoreRegistryValue
-} from '@sapphire/framework';
+import { type Events, Listener, type StoreRegistryValue } from '@sapphire/framework';
 import { blue, gray } from 'colorette';
 
 @ApplyOptions<Listener.Options>({ once: true })

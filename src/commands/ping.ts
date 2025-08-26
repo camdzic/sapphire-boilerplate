@@ -7,7 +7,7 @@ import type { ChatInputCommandInteraction } from 'discord.js';
 })
 export class BotCommand extends Command {
   override registerApplicationCommands(registry: ApplicationCommandRegistry) {
-    registry.registerChatInputCommand(builder =>
+    registry.registerChatInputCommand((builder) =>
       builder.setName(this.name).setDescription(this.description)
     );
   }
