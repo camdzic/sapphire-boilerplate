@@ -1,4 +1,4 @@
-import './lib/register';
+import '#lib/register';
 
 import { SapphireClient } from '@sapphire/framework';
 import { GatewayIntentBits } from 'discord.js';

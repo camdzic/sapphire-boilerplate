@@ -1,9 +1,9 @@
 import type { PrismaClient } from '@prisma/client';
 import type { z } from 'zod';
-import type { configSchema } from './lib/config/schemas/configSchema';
-import type { CooldownUtility } from './utilities/cooldown';
-import type { EmbedUtility } from './utilities/embed';
-import type { TimeUtility } from './utilities/time';
+import type { configSchema } from '#lib/config/schemas/configSchema';
+import type { CooldownUtility } from '#utilities/cooldown';
+import type { EmbedUtility } from '#utilities/embed';
+import type { TimeUtility } from '#utilities/time';
 
 declare module '@sapphire/pieces' {
   interface Container {

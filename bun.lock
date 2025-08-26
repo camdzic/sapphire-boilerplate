@@ -5,6 +5,7 @@
       "name": "sapphire-boilerplate",
       "dependencies": {
         "@kingsworld/plugin-cron": "^3.0.5",
+        "@prisma/client": "^6.14.0",
         "@sapphire/decorators": "^6.2.0",
         "@sapphire/framework": "^5.3.6",
         "@sapphire/plugin-logger": "^4.1.0",
@@ -55,6 +56,8 @@
     "@discordjs/ws": ["@discordjs/ws@1.2.3", "", { "dependencies": { "@discordjs/collection": "^2.1.0", "@discordjs/rest": "^2.5.1", "@discordjs/util": "^1.1.0", "@sapphire/async-queue": "^1.5.2", "@types/ws": "^8.5.10", "@vladfrangu/async_event_emitter": "^2.2.4", "discord-api-types": "^0.38.1", "tslib": "^2.6.2", "ws": "^8.17.0" } }, "sha512-wPlQDxEmlDg5IxhJPuxXr3Vy9AjYq5xCvFWGJyD7w7Np8ZGu+Mc+97LCoEc/+AYCo2IDpKioiH0/c/mj5ZR9Uw=="],
 
     "@kingsworld/plugin-cron": ["@kingsworld/plugin-cron@3.0.5", "", { "dependencies": { "croner": "^9.0.0" } }, "sha512-s66sxgxDqadpX6rLq9hqlEgKJ1QoDySEKhXJ+G3T0Wcxap+AA+UhiyTorvZ2pqbX9Y1EgcHBMzM7umJzaK6vfQ=="],
+
+    "@prisma/client": ["@prisma/client@6.14.0", "", { "peerDependencies": { "prisma": "*", "typescript": ">=5.1.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-8E/Nk3eL5g7RQIg/LUj1ICyDmhD053STjxrPxUtCRybs2s/2sOEcx9NpITuAOPn07HEpWBfhAVe1T/HYWXUPOw=="],
 
     "@prisma/config": ["@prisma/config@6.14.0", "", { "dependencies": { "c12": "3.1.0", "deepmerge-ts": "7.1.5", "effect": "3.16.12", "empathic": "2.0.0" } }, "sha512-IwC7o5KNNGhmblLs23swnfBjADkacBb7wvyDXUWLwuvUQciKJZqyecU0jw0d7JRkswrj+XTL8fdr0y2/VerKQQ=="],
 

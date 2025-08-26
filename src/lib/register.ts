@@ -1,4 +1,4 @@
-import './config/register';
+import '#lib/config/register';
 
 import '@sapphire/plugin-logger/register';
 import '@sapphire/plugin-utilities-store/register';
