@@ -1,7 +1,7 @@
 import { container } from '@sapphire/framework';
 import { EmbedBuilder } from 'discord.js';
 
-export function createBaseEmbed(
+export function baseEmbed(
   title: string,
   description: string,
   color = container.config.colors.primary
@@ -9,14 +9,14 @@ export function createBaseEmbed(
   return new EmbedBuilder().setTitle(title).setDescription(description).setColor(color);
 }
 
-export function createPrimaryEmbed() {
+export function primaryEmbed() {
   return new EmbedBuilder().setColor(container.config.colors.primary);
 }
 
-export function createSuccessEmbed(message: string, title = 'Success!') {
-  return createBaseEmbed(title, `✅ ${message}`, container.config.colors.success);
+export function successEmbed(message: string, title = 'Success!') {
+  return baseEmbed(title, `✅ ${message}`, container.config.colors.success);
 }
 
-export function createErrorEmbed(message: string, title = 'Error!') {
-  return createBaseEmbed(title, `❌ ${message}`, container.config.colors.error);
+export function errorEmbed(message: string, title = 'Error!') {
+  return baseEmbed(title, `❌ ${message}`, container.config.colors.error);
 }
