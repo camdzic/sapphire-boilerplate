@@ -3,9 +3,7 @@ export function randomNumberBetween(min: number, max: number) {
 }
 
 export function formatNumber(num: number) {
-  return Math.floor(num)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return new Intl.NumberFormat('en-US').format(Math.floor(num));
 }
 
 export function formatOrdinal(num: number) {
