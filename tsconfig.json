@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "#*": ["./src/*"],
-      "#lib/*": ["./src/lib/*"]
+      "#lib/*": ["./src/lib/*"],
+      "#utils/*": ["./src/lib/utils/*"]
     },
 
     // Best practices

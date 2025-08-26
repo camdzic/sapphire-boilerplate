@@ -27,7 +27,6 @@
     "@sapphire/decorators": "^6.2.0",
     "@sapphire/framework": "^5.3.6",
     "@sapphire/plugin-logger": "^4.1.0",
-    "@sapphire/plugin-utilities-store": "^2.0.3",
     "discord.js": "^14.22.1",
     "zod": "^3.25.76"
   }
