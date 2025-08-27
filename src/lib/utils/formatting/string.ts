@@ -17,3 +17,7 @@ export function truncateString(str: string, maxLength: number, suffix = '...') {
 
   return str.slice(0, maxLength - suffix.length) + suffix;
 }
+
+export function pluralizeString(str: string, count: number) {
+  return count === 1 ? str : `${str}s`;
+}
