@@ -32,6 +32,13 @@
   "linter": {
     "rules": {
       "recommended": true,
+      "nursery": {
+        "noFloatingPromises": {
+          "fix": "safe",
+          "level": "error",
+          "options": {}
+        }
+      },
       "complexity": {
         "noStaticOnlyClass": "off",
         "useDateNow": {
