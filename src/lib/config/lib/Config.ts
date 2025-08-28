@@ -77,6 +77,7 @@ export class Config<T> {
   private createDefaultConfigFile() {
     try {
       this.writeConfigFile(this.defaultConfig);
+
       return this.defaultConfig;
     } catch (error) {
       throw new Error(`Failed to create default config file: ${error}`);

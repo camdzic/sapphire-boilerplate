@@ -110,7 +110,7 @@ export function modal(
   customId: string,
   ...textInputs: Partial<TextInputComponentData>[]
 ) {
-  const modalBuilder = new ModalBuilder().setCustomId(customId).setTitle(title);
+  const modalBuilder = new ModalBuilder().setTitle(title).setCustomId(customId);
 
   for (const textInput of textInputs) {
     const textInputBuilder = new TextInputBuilder(textInput);

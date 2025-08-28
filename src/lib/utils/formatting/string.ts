@@ -1,3 +1,5 @@
+export const invisibleCharacter = '\u200B';
+
 export function toTitleCase(str: string) {
   return str
     .toLowerCase()
