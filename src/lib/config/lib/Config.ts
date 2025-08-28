@@ -4,41 +4,124 @@ import { merge } from 'lodash';
 import type { ZodSchema } from 'zod';
 
 export class Config<T> {
-  private filePath: string;
-  private zodSchema: ZodSchema<T>;
-  private defaults: T;
+  private readonly configPath: string;
+  private readonly schema: ZodSchema<T>;
+  private readonly defaultConfig: T;
 
-  data: T;
+  readonly data: T;
 
-  constructor(filePath: string, zodSchema: ZodSchema<T>, defaults: T) {
-    this.filePath = filePath;
-    this.zodSchema = zodSchema;
-    this.defaults = defaults;
+  constructor(configPath: string, schema: ZodSchema<T>, defaultConfig: T) {
+    this.validateConfigPath(configPath);
+    this.configPath = configPath;
+    this.schema = schema;
+    this.defaultConfig = defaultConfig;
 
-    this.validateEverything();
+    this.data = this.initializeConfig();
   }
 
-  private validateEverything() {
-    const fileDir = path.dirname(this.filePath);
-
-    if (!fs.existsSync(fileDir)) {
-      fs.mkdirSync(fileDir, { recursive: true });
+  private validateConfigPath(configPath: string) {
+    if (!configPath || configPath.trim().length === 0) {
+      throw new Error('Config path cannot be empty');
     }
 
-    if (!fs.existsSync(this.filePath)) {
-      this.data = this.defaults;
+    if (!configPath.toLowerCase().endsWith('.json')) {
+      throw new Error('Config file must have .json extension');
+    }
 
-      fs.writeFileSync(this.filePath, JSON.stringify(this.defaults, null, 2));
-    } else {
-      const rawData = fs.readFileSync(this.filePath, 'utf-8');
-      const parsedData = JSON.parse(rawData);
+    const invalidChars = /[<>:"|?*]/;
+    const hasControlChars = configPath.split('').some((char) => char.charCodeAt(0) < 32);
+    if (invalidChars.test(configPath) || hasControlChars) {
+      throw new Error('Config path contains invalid characters');
+    }
 
-      const mergedConfig = merge(this.defaults, parsedData);
-      const validatedConfig = this.zodSchema.parse(mergedConfig);
+    const fileName = path.basename(configPath);
+    if (fileName === '.json') {
+      throw new Error('Config file must have a name before .json extension');
+    }
 
-      this.data = validatedConfig;
+    if (configPath.length > 250) {
+      throw new Error('Config path is too long (max 250 characters)');
+    }
 
-      fs.writeFileSync(this.filePath, JSON.stringify(validatedConfig, null, 2));
+    if (
+      path.basename(configPath) === configPath &&
+      !configPath.includes('/') &&
+      !configPath.includes('\\')
+    ) {
+      throw new Error('Config path should include directory structure, not just filename');
+    }
+  }
+
+  private initializeConfig() {
+    this.ensureConfigDirectory();
+
+    if (!this.configFileExists()) {
+      return this.createDefaultConfigFile();
+    }
+
+    return this.loadAndValidateConfig();
+  }
+
+  private ensureConfigDirectory() {
+    const configDirectory = path.dirname(this.configPath);
+
+    if (!fs.existsSync(configDirectory)) {
+      fs.mkdirSync(configDirectory, { recursive: true });
+    }
+  }
+
+  private configFileExists() {
+    return fs.existsSync(this.configPath);
+  }
+
+  private createDefaultConfigFile() {
+    try {
+      this.writeConfigFile(this.defaultConfig);
+      return this.defaultConfig;
+    } catch (error) {
+      throw new Error(`Failed to create default config file: ${error}`);
+    }
+  }
+
+  private loadAndValidateConfig() {
+    try {
+      const existingConfig = this.readConfigFile();
+      const mergedConfig = merge({}, this.defaultConfig, existingConfig);
+      const validatedConfig = this.validateConfig(mergedConfig);
+
+      this.writeConfigFile(validatedConfig);
+
+      return validatedConfig;
+    } catch (error) {
+      throw new Error(`Failed to load and validate config: ${error}`);
+    }
+  }
+
+  private readConfigFile() {
+    try {
+      const rawData = fs.readFileSync(this.configPath, 'utf-8');
+
+      return JSON.parse(rawData);
+    } catch (error) {
+      throw new Error(`Failed to read or parse config file at ${this.configPath}: ${error}`);
+    }
+  }
+
+  private writeConfigFile(config: T) {
+    try {
+      const formattedConfig = JSON.stringify(config, null, 2);
+
+      fs.writeFileSync(this.configPath, formattedConfig, 'utf-8');
+    } catch (error) {
+      throw new Error(`Failed to write config file at ${this.configPath}: ${error}`);
+    }
+  }
+
+  private validateConfig(config: unknown) {
+    try {
+      return this.schema.parse(config);
+    } catch (error) {
+      throw new Error(`Config validation failed: ${error}`);
     }
   }
 }
