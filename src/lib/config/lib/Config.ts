@@ -12,6 +12,7 @@ export class Config<T> {
 
   constructor(configPath: string, schema: ZodSchema<T>, defaultConfig: T) {
     this.validateConfigPath(configPath);
+
     this.configPath = configPath;
     this.schema = schema;
     this.defaultConfig = defaultConfig;
@@ -20,7 +21,7 @@ export class Config<T> {
   }
 
   private validateConfigPath(configPath: string) {
-    if (!configPath || configPath.trim().length === 0) {
+    if (!configPath || !configPath.trim().length) {
       throw new Error('Config path cannot be empty');
     }
 
