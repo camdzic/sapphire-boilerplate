@@ -16,8 +16,7 @@ The boilerplate includes several utility modules:
 - **Database** (`createCooldown`, `checkCooldown`) - Cooldown management with database persistence
 - **Discord** 
   - **Embeds** (`baseEmbed`, `primaryEmbed`, `successEmbed`, `errorEmbed`) - Pre-configured Discord embed builders
-  - **Action Rows** (`baseActionRow`, `button`, `selectMenu`) - Utility functions for creating Discord components
-  - **Modals** (`modal`) - Modal creation utilities
+  - **Action Rows** (`baseActionRow`, `button`, `selectMenu`, `modal`) - Utility functions for creating Discord components
 - **Array** (`randomArrayElement`, `chunkArray`, `shuffleArray`, `getUniqueArrayElements`, `formatArray`) - Array manipulation utilities
 - **Number** (`randomNumberBetween`, `formatNumber`, `formatOrdinal`) - Number formatting and generation
 - **String** (`toTitleCase`, `capitalizeString`, `truncateString`, `pluralizeString`) - String formatting utilities
