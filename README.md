@@ -17,6 +17,7 @@ The boilerplate includes several utility modules:
 - **Discord** 
   - **Embeds** (`baseEmbed`, `primaryEmbed`, `successEmbed`, `errorEmbed`) - Pre-configured Discord embed builders
   - **Action Rows** (`baseActionRow`, `button`, `selectMenu`) - Utility functions for creating Discord components
+  - **Modals** (`modal`) - Modal creation utilities
 - **Array** (`randomArrayElement`, `chunkArray`, `shuffleArray`, `getUniqueArrayElements`, `formatArray`) - Array manipulation utilities
 - **Number** (`randomNumberBetween`, `formatNumber`, `formatOrdinal`) - Number formatting and generation
 - **String** (`toTitleCase`, `capitalizeString`, `truncateString`, `pluralizeString`) - String formatting utilities
