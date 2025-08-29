@@ -4,8 +4,31 @@ import { blue, gray } from 'colorette';
 
 @ApplyOptions<Listener.Options>({ once: true })
 export class BotListener extends Listener<typeof Events.ClientReady> {
-  override run() {
+  override async run() {
+    const logError = this.container.logger.error.bind(this.container.logger);
+
+    process.on('unhandledRejection', logError);
+    process.on('uncaughtException', logError);
+
+    await this.fetchMainGuildMembers();
+
     this.printStoreDebugInformation();
+  }
+
+  private async fetchMainGuildMembers() {
+    const mainGuild = this.container.client.guilds.cache.get(process.env.GUILD_ID);
+
+    if (!mainGuild) {
+      this.container.logger.error(`Main guild not found`);
+
+      process.exit(1);
+    }
+
+    await mainGuild.members.fetch();
+
+    this.container.logger.info(
+      `Fetched ${mainGuild.members.cache.size} members from the main guild`
+    );
   }
 
   private printStoreDebugInformation() {
