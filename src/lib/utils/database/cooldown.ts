@@ -1,9 +1,9 @@
 import { container } from '@sapphire/framework';
 import { formatMs } from '../formatting/time';
 
-export async function createCooldown(key: string, duration: number) {
+export async function createCooldown(key: string, ms: number) {
   const nowDate = Date.now();
-  const expiresAt = new Date(nowDate + duration);
+  const expiresAt = new Date(nowDate + ms);
 
   await container.prisma.cooldown.upsert({
     where: { key },
