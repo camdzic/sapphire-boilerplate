@@ -60,6 +60,11 @@
           "level": "error",
           "fix": "safe",
           "options": {}
+        },
+        "useTemplate": {
+          "level": "error",
+          "fix": "safe",
+          "options": {}
         }
       },
       "suspicious": {
