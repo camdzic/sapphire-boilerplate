@@ -13,7 +13,7 @@
     "biome": "biome check --write"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.2",
+    "@biomejs/biome": "^2.2.3",
     "@types/bun": "^1.2.21",
     "@types/lodash": "^4.17.20",
     "lefthook": "^1.12.3",
