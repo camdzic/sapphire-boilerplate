@@ -2,6 +2,7 @@ export * from './database/cooldown';
 
 export * from './discord/actionRow';
 export * from './discord/embed';
+export * from './discord/resolver';
 
 export * from './formatting/array';
 export * from './formatting/number';

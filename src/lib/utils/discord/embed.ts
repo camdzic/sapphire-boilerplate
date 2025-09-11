@@ -5,7 +5,7 @@ export function primaryEmbed() {
   return new EmbedBuilder().setColor(container.config.colors.primary);
 }
 
-export function baseEmbed(title: string, description: string, color?: ColorResolvable) {
+export function baseEmbed(title: string | null, description: string, color?: ColorResolvable) {
   const embed = primaryEmbed().setTitle(title).setDescription(description);
 
   if (color) {
@@ -15,10 +15,10 @@ export function baseEmbed(title: string, description: string, color?: ColorResol
   return embed;
 }
 
-export function successEmbed(message: string, title = 'Success!') {
+export function successEmbed(message: string, title: string | null = 'Success!') {
   return baseEmbed(title, `✅ ${message}`, container.config.colors.success);
 }
 
-export function errorEmbed(message: string, title = 'Error!') {
+export function errorEmbed(message: string, title: string | null = 'Error!') {
   return baseEmbed(title, `❌ ${message}`, container.config.colors.error);
 }

@@ -1,6 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { type Events, Listener, type StoreRegistryValue } from '@sapphire/framework';
 import { blue, gray } from 'colorette';
+import { getGuild, getMembers } from '#lib/utils';
 
 @ApplyOptions<Listener.Options>({ once: true })
 export class BotListener extends Listener<typeof Events.ClientReady> {
@@ -16,19 +17,17 @@ export class BotListener extends Listener<typeof Events.ClientReady> {
   }
 
   private async fetchMainGuildMembers() {
-    const mainGuild = this.container.client.guilds.cache.get(process.env.GUILD_ID);
+    const mainGuild = await getGuild();
 
     if (!mainGuild) {
-      this.container.logger.error(`Main guild not found`);
+      this.container.logger.error('Main guild not found');
 
       process.exit(1);
     }
 
-    await mainGuild.members.fetch();
+    const members = await getMembers();
 
-    this.container.logger.info(
-      `Fetched ${mainGuild.members.cache.size} members from the main guild`
-    );
+    this.container.logger.info(`Fetched ${members.length} members from the main guild`);
   }
 
   private printStoreDebugInformation() {
