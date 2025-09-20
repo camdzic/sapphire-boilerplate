@@ -1,11 +1,12 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { type ApplicationCommandRegistry, Command } from '@sapphire/framework';
+import type { ApplicationCommandRegistry } from '@sapphire/framework';
 import type { ChatInputCommandInteraction } from 'discord.js';
+import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
 
-@ApplyOptions<Command.Options>({
+@ApplyOptions<ExtendedCommand.Options>({
   description: "Check the bot's latency"
 })
-export class BotCommand extends Command {
+export class BotCommand extends ExtendedCommand {
   override registerApplicationCommands(registry: ApplicationCommandRegistry) {
     registry.registerChatInputCommand((builder) =>
       builder.setName(this.name).setDescription(this.description)
