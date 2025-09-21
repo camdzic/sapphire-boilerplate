@@ -1,0 +1,77 @@
+---
+globs: src/**/*.ts
+---
+
+# Sapphire Framework Guidelines
+
+## Command Development
+
+### Base Command Class
+Always extend [ExtendedCommand](mdc:src/lib/extensions/ExtendedCommand.ts) for new commands:
+
+```typescript
+import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
+
+export class MyCommand extends ExtendedCommand {
+  // Implementation
+}
+```
+
+### Command Structure
+1. **Decorators**: Use `@ApplyOptions<ExtendedCommand.Options>()` for configuration
+2. **Registration**: Override `registerApplicationCommands()` for slash command setup
+3. **Execution**: Override `chatInputRun()` for command logic
+4. **Naming**: Commands should be in PascalCase and end with "Command"
+
+### Command Registration Pattern
+```typescript
+override registerApplicationCommands(registry: ApplicationCommandRegistry): void {
+  registry.registerChatInputCommand((builder) =>
+    builder
+      .setName(this.name)
+      .setDescription(this.description)
+      // Add options, subcommands, etc.
+  );
+}
+```
+
+## Framework Features
+
+### Container Access
+Access the Sapphire container for shared resources:
+- `this.container.client` - Discord client
+- `this.container.prisma` - Database client
+- `this.container.logger` - Logger instance
+
+### Preconditions
+Create preconditions in `src/preconditions/` for command restrictions:
+- Use `@ApplyOptions<PreconditionOptions>()`
+- Implement `chatInputRun()` or `contextMenuRun()`
+- Return `PreconditionResult` for pass/fail
+
+### Listeners
+Create event listeners in `src/listeners/`:
+- Use `@ApplyOptions<ListenerOptions>()`
+- Implement event handler methods
+- Follow Discord.js event naming conventions
+
+### Configuration
+- Use the config system in `src/lib/config/`
+- Define schemas with Zod in `src/lib/config/schemas/`
+- Access config through the container
+
+## Plugin Integration
+
+The bot uses these Sapphire plugins:
+- `@sapphire/plugin-logger` - Structured logging
+- `@kingsworld/plugin-cron` - Scheduled tasks
+
+Register plugins in [src/lib/register.ts](mdc:src/lib/register.ts) and configure them as needed.
+
+## Best Practices
+
+1. **Error Handling**: Use Sapphire's error handling system
+2. **Type Safety**: Leverage Sapphire's TypeScript types
+3. **Decorators**: Use Sapphire decorators for clean code
+4. **Async/Await**: Always use async/await, never .then()
+5. **Resource Management**: Properly handle database connections and cleanup

@@ -1,0 +1,38 @@
+---
+alwaysApply: true
+---
+
+# Sapphire Discord Bot Boilerplate - Project Structure
+
+This is a Discord bot built with the Sapphire framework using TypeScript, Bun, and Prisma.
+
+## Core Architecture
+
+- **Entry Point**: [src/index.ts](mdc:src/index.ts) - Main application entry point with SapphireClient setup
+- **Framework Setup**: [src/lib/register.ts](mdc:src/lib/register.ts) - Registers plugins, database, and command registries
+- **Extended Command**: [src/lib/extensions/ExtendedCommand.ts](mdc:src/lib/extensions/ExtendedCommand.ts) - Base command class for all bot commands
+
+## Directory Structure
+
+- `src/commands/` - Bot slash commands (extend ExtendedCommand)
+- `src/listeners/` - Discord.js event listeners
+- `src/preconditions/` - Command preconditions (permissions, cooldowns, etc.)
+- `src/lib/config/` - Configuration management with Zod schemas
+- `src/lib/utils/` - Utility functions (Discord, formatting, database helpers)
+- `prisma/` - Database schema and migrations
+- `config/` - Bot configuration files
+
+## Key Dependencies
+
+- **Framework**: @sapphire/framework (Discord bot framework)
+- **Runtime**: Bun (JavaScript runtime)
+- **Database**: Prisma with SQLite
+- **Linting**: Biome (formatter and linter)
+- **Validation**: Zod (schema validation)
+
+## Path Mapping
+
+Use these path aliases in imports:
+- `#lib/*` → `src/lib/*`
+- `#utils/*` → `src/lib/utils/*`
+- `#*` → `src/*`

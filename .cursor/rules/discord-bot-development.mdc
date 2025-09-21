@@ -1,0 +1,96 @@
+---
+globs: src/commands/*.ts,src/listeners/*.ts,src/preconditions/*.ts
+---
+
+# Discord Bot Development Guidelines
+
+## Discord.js Integration
+
+### Client Configuration
+The bot is configured in [src/index.ts](mdc:src/index.ts) with:
+- **Intents**: Guilds, GuildMembers (add more as needed)
+- **Partials**: User, GuildMember, Channel, Message
+- **Timezone**: Europe/Sarajevo for cron tasks
+
+### Interaction Handling
+
+#### Slash Commands
+- Always use `ChatInputCommandInteraction` type
+- Respond with `interaction.reply()` for initial response
+- Use `interaction.editReply()` for updates
+- Handle `withResponse: true` for ping/latency commands
+
+#### Response Patterns
+```typescript
+// Initial response
+await interaction.reply({ content: 'Processing...' });
+
+// Edit response
+await interaction.editReply({ content: 'Updated content' });
+
+// Deferred response
+await interaction.deferReply();
+await interaction.editReply({ content: 'Result' });
+```
+
+### Embed and Component Utilities
+
+Use the utility functions in `src/lib/utils/discord/`:
+- [actionRow.ts](mdc:src/lib/utils/discord/actionRow.ts) - Action row builders
+- [embed.ts](mdc:src/lib/utils/discord/embed.ts) - Embed builders
+- [resolver.ts](mdc:src/lib/utils/discord/resolver.ts) - Data resolvers
+
+### Command Registration
+
+Commands are registered per-guild by default:
+- Set `GUILD_ID` environment variable for development
+- Use `RegisterBehavior.BulkOverwrite` for production
+
+### Error Handling
+
+#### Interaction Errors
+```typescript
+try {
+  await interaction.reply({ content: 'Success' });
+} catch (error) {
+  this.container.logger.error('Command error:', error);
+  
+  if (!interaction.replied && !interaction.deferred) {
+    await interaction.reply({ 
+      content: 'An error occurred while processing your request.',
+      ephemeral: true 
+    });
+  }
+}
+```
+
+#### Rate Limiting
+- Respect Discord's rate limits
+- Implement proper error handling for 429 responses
+- Use cooldowns for expensive operations
+
+### Best Practices
+
+1. **Permissions**: Always check bot permissions before operations
+2. **Ephemeral Responses**: Use ephemeral for user-specific data
+3. **Input Validation**: Validate user input before processing
+4. **Logging**: Log important events and errors
+5. **Timeouts**: Handle interaction timeouts (15 minutes)
+6. **Deferrals**: Defer long-running operations
+7. **Error Messages**: Provide user-friendly error messages
+
+### Security Considerations
+
+1. **User Input**: Sanitize and validate all user input
+2. **Permissions**: Check user permissions before sensitive operations
+3. **Rate Limiting**: Implement reasonable rate limits
+4. **Data Privacy**: Handle user data responsibly
+5. **Environment Variables**: Keep sensitive data in environment variables
+
+### Performance Tips
+
+1. **Database Queries**: Optimize database operations
+2. **Caching**: Cache frequently accessed data
+3. **Batch Operations**: Use batch operations when possible
+4. **Lazy Loading**: Load data only when needed
+5. **Memory Management**: Properly dispose of resources

@@ -1,0 +1,64 @@
+---
+globs: *.ts,*.tsx,*.js,*.jsx
+---
+
+# Coding Standards and Style Guide
+
+## Code Style (Biome Configuration)
+
+Follow the Biome configuration in [biome.json](mdc:biome.json):
+
+### Formatting
+- **Indentation**: 2 spaces (not tabs)
+- **Line Width**: 100 characters maximum
+- **Line Endings**: LF (Unix-style)
+- **Quotes**: Single quotes for strings
+- **Semicolons**: Always required
+- **Trailing Commas**: None
+
+### TypeScript Standards
+- Use strict TypeScript configuration from [tsconfig.json](mdc:tsconfig.json)
+- Always use explicit return types for functions
+- Prefer `interface` over `type` for object shapes
+- Use `override` keyword when overriding methods
+- Import types with `type` keyword: `import type { TypeName } from 'package'`
+
+### Error Handling
+- Always handle promises properly (no floating promises)
+- Use try-catch blocks for async operations
+- Provide meaningful error messages
+- Use `await` for all async operations (no `.then()` chains)
+
+### Code Quality Rules
+- No unused imports or variables
+- Use block statements for all control flow
+- Use template literals instead of string concatenation
+- Use `Date.now()` instead of `new Date().getTime()`
+- Avoid static-only classes
+
+### Import Organization
+1. Path alias imports first (`#lib/*`, `#utils/*`)
+2. External package imports
+3. Relative imports last
+4. Separate groups with empty lines
+
+### Example Command Structure
+```typescript
+import { ApplyOptions } from '@sapphire/decorators';
+import type { ApplicationCommandRegistry } from '@sapphire/framework';
+import type { ChatInputCommandInteraction } from 'discord.js';
+import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
+
+@ApplyOptions<ExtendedCommand.Options>({
+  description: 'Command description here'
+})
+export class CommandName extends ExtendedCommand {
+  override registerApplicationCommands(registry: ApplicationCommandRegistry): void {
+    // Command registration
+  }
+
+  override async chatInputRun(interaction: ChatInputCommandInteraction): Promise<void> {
+    // Command logic
+  }
+}
+```

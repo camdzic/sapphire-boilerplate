@@ -1,0 +1,85 @@
+---
+description: Development workflow, tooling, and environment setup
+---
+
+# Development Workflow and Tooling
+
+## Development Environment
+
+### Runtime and Package Manager
+- **Runtime**: Bun (JavaScript runtime and package manager)
+- **Start Command**: `bun run src/index.ts`
+- **Development**: `bun run --watch src/index.ts` (auto-reload)
+- **Linting**: `bun run biome` (check and fix)
+
+### Git Hooks
+- **Lefthook**: Configured in [lefthook.yml](mdc:lefthook.yml)
+- Pre-commit hooks for code quality
+- Automated linting and formatting
+
+## Code Quality Tools
+
+### Biome Configuration
+- **Formatter**: 2 spaces, 100 char width, single quotes, semicolons
+- **Linter**: Strict rules for unused imports, floating promises, etc.
+- **Auto-fix**: Run `bun run biome` to automatically fix issues
+
+### TypeScript Configuration
+- **Strict Mode**: Enabled with proper type checking
+- **Path Mapping**: Use `#lib/*` and `#utils/*` aliases
+- **Decorators**: Experimental decorators enabled for Sapphire
+
+## Project Scripts
+
+```bash
+# Development
+bun run dev          # Start with auto-reload
+bun run start        # Production start
+bun run biome        # Lint and format code
+
+# Database
+npx prisma generate  # Generate Prisma client
+npx prisma db push   # Push schema changes
+npx prisma studio    # Database GUI
+```
+
+## Environment Setup
+
+### Required Environment Variables
+- `GUILD_ID` - Discord guild ID for command registration
+- Database connection (if not using default SQLite)
+
+### Development Best Practices
+1. **Hot Reload**: Use `bun run dev` for development
+2. **Code Quality**: Run `bun run biome` before commits
+3. **Database**: Use Prisma Studio for database inspection
+4. **Logging**: Check console output for debugging
+5. **Testing**: Test commands in Discord before deployment
+
+## File Organization
+
+### Command Structure
+```
+src/commands/
+├── ping.ts           # Example command
+└── category/         # Group related commands
+    ├── command1.ts
+    └── command2.ts
+```
+
+### Utility Organization
+```
+src/lib/utils/
+├── discord/          # Discord-specific utilities
+├── database/         # Database utilities
+├── formatting/       # Text/formatting utilities
+└── index.ts         # Utility exports
+```
+
+## Deployment Considerations
+
+1. **Environment**: Set production environment variables
+2. **Database**: Migrate to production database (PostgreSQL recommended)
+3. **Logging**: Configure proper logging levels
+4. **Monitoring**: Set up error tracking and monitoring
+5. **Scaling**: Consider horizontal scaling for large bots

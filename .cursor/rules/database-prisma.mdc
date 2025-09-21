@@ -1,0 +1,104 @@
+---
+globs: prisma/*,src/**/*database*.ts,src/**/*cooldown*.ts
+---
+
+# Database and Prisma Guidelines
+
+## Database Setup
+
+### Prisma Configuration
+- **Database**: SQLite (development) - see [prisma/schema.prisma](mdc:prisma/schema.prisma)
+- **Client**: PrismaClient instance available via `this.container.prisma`
+- **Location**: Database file at `prisma/database.db`
+
+### Schema Management
+```bash
+# Generate Prisma client
+npx prisma generate
+
+# Push schema changes (development)
+npx prisma db push
+
+# Create and apply migrations (production)
+npx prisma migrate dev --name migration_name
+```
+
+## Database Patterns
+
+### Prisma Client Usage
+```typescript
+// Access via container
+const prisma = this.container.prisma;
+
+// Example query
+const user = await prisma.user.findUnique({
+  where: { id: userId }
+});
+```
+
+### Error Handling
+```typescript
+try {
+  const result = await prisma.model.create({
+    data: { /* data */ }
+  });
+  return result;
+} catch (error) {
+  this.container.logger.error('Database error:', error);
+  throw new Error('Failed to create record');
+}
+```
+
+### Transaction Handling
+```typescript
+const result = await prisma.$transaction(async (tx) => {
+  const user = await tx.user.create({ data: userData });
+  const profile = await tx.profile.create({ 
+    data: { ...profileData, userId: user.id } 
+  });
+  return { user, profile };
+});
+```
+
+## Existing Models
+
+### Cooldown Model
+Located in [src/lib/utils/database/cooldown.ts](mdc:src/lib/utils/database/cooldown.ts):
+```prisma
+model Cooldown {
+  key String @id
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+```
+
+Use for implementing command cooldowns and rate limiting.
+
+## Best Practices
+
+### Query Optimization
+1. **Select Fields**: Only select needed fields with `select`
+2. **Relations**: Use `include` sparingly, prefer separate queries for complex relations
+3. **Indexing**: Add database indexes for frequently queried fields
+4. **Pagination**: Implement pagination for large result sets
+
+### Data Validation
+1. **Zod Schemas**: Validate data with Zod before database operations
+2. **Type Safety**: Use Prisma's generated types
+3. **Constraints**: Use database constraints for data integrity
+
+### Connection Management
+1. **Connection Pooling**: Prisma handles connection pooling automatically
+2. **Graceful Shutdown**: Properly disconnect Prisma client on bot shutdown
+3. **Error Recovery**: Implement retry logic for transient failures
+
+### Migration Strategy
+1. **Development**: Use `prisma db push` for rapid prototyping
+2. **Production**: Use `prisma migrate` for version-controlled changes
+3. **Backup**: Always backup database before migrations
+4. **Rollback**: Plan rollback strategies for failed migrations
+
+### Environment Configuration
+- Use environment variables for database connection strings
+- Different databases for development/staging/production
+- Keep sensitive credentials in `.env` files (not committed)
