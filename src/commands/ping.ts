@@ -19,12 +19,18 @@ export class BotCommand extends ExtendedCommand {
       withResponse: true
     });
 
-    if (pingInteraction.resource?.message) {
+    if (!pingInteraction.resource || !pingInteraction.resource.message) {
       return interaction.editReply({
-        content: `Bot Latency: ${pingInteraction.resource.message.createdTimestamp - interaction.createdTimestamp}ms\nWebSocket Latency: ${Math.round(
-          this.container.client.ws.ping
-        )}ms`
+        content: 'Failed to get ping information'
       });
     }
+
+    const botLatency =
+      pingInteraction.resource.message.createdTimestamp - interaction.createdTimestamp;
+    const wsLatency = Math.round(this.container.client.ws.ping);
+
+    return interaction.editReply({
+      content: `Bot Latency: ${botLatency}ms\nWebSocket Latency: ${wsLatency}ms`
+    });
   }
 }

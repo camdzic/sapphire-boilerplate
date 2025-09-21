@@ -23,6 +23,10 @@ export function baseActionRow() {
   return new ActionRowBuilder<MessageActionRowComponentBuilder>();
 }
 
+export function baseModalActionRow() {
+  return new ActionRowBuilder<ModalActionRowComponentBuilder>();
+}
+
 export function button(...buttons: Partial<ButtonComponentData>[]) {
   const actionRow = baseActionRow();
 
@@ -76,6 +80,23 @@ export function selectMenu(
   return actionRow;
 }
 
+export function modal(
+  title: string,
+  customId: string,
+  ...textInputs: Partial<TextInputComponentData>[]
+) {
+  const modalBuilder = new ModalBuilder().setTitle(title).setCustomId(customId);
+
+  for (const textInput of textInputs) {
+    const textInputBuilder = new TextInputBuilder(textInput);
+    const actionRow = baseModalActionRow().addComponents(textInputBuilder);
+
+    modalBuilder.addComponents(actionRow);
+  }
+
+  return modalBuilder;
+}
+
 function createSelectMenu(
   type: 'string' | 'user' | 'channel' | 'role' | 'mentionable',
   selectMenu:
@@ -99,26 +120,4 @@ function createSelectMenu(
         selectMenu as Partial<MentionableSelectMenuComponentData>
       );
   }
-}
-
-export function baseModalActionRow() {
-  return new ActionRowBuilder<ModalActionRowComponentBuilder>();
-}
-
-export function modal(
-  title: string,
-  customId: string,
-  ...textInputs: Partial<TextInputComponentData>[]
-) {
-  const modalBuilder = new ModalBuilder().setTitle(title).setCustomId(customId);
-
-  for (const textInput of textInputs) {
-    const textInputBuilder = new TextInputBuilder(textInput);
-
-    const actionRow = baseModalActionRow().addComponents(textInputBuilder);
-
-    modalBuilder.addComponents(actionRow);
-  }
-
-  return modalBuilder;
 }

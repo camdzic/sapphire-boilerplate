@@ -6,14 +6,18 @@ import { getGuild, getMembers } from '#lib/utils';
 @ApplyOptions<Listener.Options>({ once: true })
 export class BotListener extends Listener<typeof Events.ClientReady> {
   override async run() {
-    const logError = this.container.logger.error.bind(this.container.logger);
-
-    process.on('unhandledRejection', logError);
-    process.on('uncaughtException', logError);
+    this.setupErrorHandling();
 
     await this.fetchMainGuildMembers();
 
     this.printStoreDebugInformation();
+  }
+
+  private setupErrorHandling() {
+    const logError = this.container.logger.error.bind(this.container.logger);
+
+    process.on('unhandledRejection', logError);
+    process.on('uncaughtException', logError);
   }
 
   private async fetchMainGuildMembers() {
@@ -21,7 +25,6 @@ export class BotListener extends Listener<typeof Events.ClientReady> {
 
     if (!mainGuild) {
       this.container.logger.error('Main guild not found');
-
       process.exit(1);
     }
 
