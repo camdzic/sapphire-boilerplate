@@ -1,32 +1,39 @@
-export class Mutex {
-  private isAcquired = false;
-  private waitingList: Array<() => void> = [];
+const lockSet = new Set<string>();
+const waitingQueues = new Map<string, Array<() => void>>();
 
-  acquire() {
-    if (!this.isAcquired) {
-      this.isAcquired = true;
+export function acquireMutex(lockKey: string) {
+  if (!lockSet.has(lockKey)) {
+    lockSet.add(lockKey);
 
-      return Promise.resolve();
-    }
-
-    return new Promise<void>((resolve) => {
-      this.waitingList.push(resolve);
-    });
+    return;
   }
 
-  release() {
-    if (this.waitingList.length) {
-      const next = this.waitingList.shift();
-
-      if (next) {
-        next();
-      }
-    } else {
-      this.isAcquired = false;
+  return new Promise<void>((resolve) => {
+    if (!waitingQueues.has(lockKey)) {
+      waitingQueues.set(lockKey, []);
     }
-  }
+
+    const waitingQueue = waitingQueues.get(lockKey);
+
+    if (waitingQueue) {
+      waitingQueue.push(resolve);
+    }
+  });
 }
 
-export function createMutex() {
-  return new Mutex();
+export function releaseMutex(lockKey: string) {
+  const waitingQueue = waitingQueues.get(lockKey);
+
+  if (!waitingQueue || !waitingQueue.length) {
+    lockSet.delete(lockKey);
+    waitingQueues.delete(lockKey);
+
+    return;
+  }
+
+  const nextResolve = waitingQueue.shift();
+
+  if (nextResolve) {
+    nextResolve();
+  }
 }
