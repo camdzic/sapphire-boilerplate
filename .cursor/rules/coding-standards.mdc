@@ -18,10 +18,22 @@ Follow the Biome configuration in [biome.json](mdc:biome.json):
 
 ### TypeScript Standards
 - Use strict TypeScript configuration from [tsconfig.json](mdc:tsconfig.json)
-- Always use explicit return types for functions
-- Prefer `interface` over `type` for object shapes
+- **NEVER** specify explicit return types for functions
+- Let TypeScript automatically infer return types
+- Use the format: `function functionName()`
+- Examples:
+  - `function hello()`
+  - `function calculateSum(a: number, b: number)`
+  - `function getUser(id: string)`
+- This applies to all functions, methods, and arrow functions
+- Prefer `type` over `interface` for object shapes
 - Use `override` keyword when overriding methods
 - Import types with `type` keyword: `import type { TypeName } from 'package'`
+
+### Comments
+- **NEVER** add comments in code
+- Code should be self-documenting through clear naming and structure
+- Avoid inline comments, block comments, or documentation comments
 
 ### Error Handling
 - Always handle promises properly (no floating promises)
@@ -35,6 +47,14 @@ Follow the Biome configuration in [biome.json](mdc:biome.json):
 - Use template literals instead of string concatenation
 - Use `Date.now()` instead of `new Date().getTime()`
 - Avoid static-only classes
+
+### Length and Size Checks
+- **PREFER** direct truthiness checks over comparisons to 0
+- Use `if (array.length)` instead of `if (array.length > 0)`
+- Use `if (string.length)` instead of `if (string.length > 0)`
+- Use `if (object.size)` instead of `if (object.size > 0)`
+- Use `if (collection.size)` instead of `if (collection.size > 0)`
+- This applies to all size/length properties on arrays, strings, Sets, Maps, and other collections
 
 ### Import Organization
 1. Path alias imports first (`#lib/*`, `#utils/*`)
