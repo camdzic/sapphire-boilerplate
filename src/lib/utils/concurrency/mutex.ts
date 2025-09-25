@@ -1,7 +1,14 @@
 const lockSet = new Set<string>();
 const waitingQueues = new Map<string, Array<() => void>>();
 
-export function acquireMutex(lockKey: string) {
+export function createMutex(lockKey: string) {
+  return {
+    acquire: () => acquireMutex(lockKey),
+    release: () => releaseMutex(lockKey)
+  };
+}
+
+function acquireMutex(lockKey: string) {
   if (!lockSet.has(lockKey)) {
     lockSet.add(lockKey);
 
@@ -21,7 +28,7 @@ export function acquireMutex(lockKey: string) {
   });
 }
 
-export function releaseMutex(lockKey: string) {
+function releaseMutex(lockKey: string) {
   const waitingQueue = waitingQueues.get(lockKey);
 
   if (!waitingQueue || !waitingQueue.length) {
@@ -36,11 +43,4 @@ export function releaseMutex(lockKey: string) {
   if (nextResolve) {
     nextResolve();
   }
-}
-
-export function createMutex(lockKey: string) {
-  return {
-    acquire: () => acquireMutex(lockKey),
-    release: () => releaseMutex(lockKey)
-  };
 }
