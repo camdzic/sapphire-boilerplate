@@ -37,3 +37,10 @@ export function releaseMutex(lockKey: string) {
     nextResolve();
   }
 }
+
+export function createMutex(lockKey: string) {
+  return {
+    acquire: () => acquireMutex(lockKey),
+    release: () => releaseMutex(lockKey)
+  };
+}
