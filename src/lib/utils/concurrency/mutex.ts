@@ -8,6 +8,18 @@ export function createMutex(lockKey: string) {
   };
 }
 
+export async function withMutex<T>(lockKey: string, fn: () => Promise<T>) {
+  const mutex = createMutex(lockKey);
+
+  await mutex.acquire();
+
+  try {
+    return await fn();
+  } finally {
+    mutex.release();
+  }
+}
+
 function acquireMutex(lockKey: string) {
   if (!lockSet.has(lockKey)) {
     lockSet.add(lockKey);
