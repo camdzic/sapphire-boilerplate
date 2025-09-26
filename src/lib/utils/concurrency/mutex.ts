@@ -14,7 +14,7 @@ export async function withMutex<T>(lockKey: string, fn: () => Promise<T>) {
   await mutex.acquire();
 
   try {
-    return await fn();
+    await fn();
   } finally {
     mutex.release();
   }

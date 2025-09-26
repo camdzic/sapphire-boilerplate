@@ -12,7 +12,7 @@ Always extend [ExtendedCommand](mdc:src/lib/extensions/ExtendedCommand.ts) for n
 ```typescript
 import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
 
-export class MyCommand extends ExtendedCommand {
+export class BotCommand extends ExtendedCommand {
   // Implementation
 }
 ```

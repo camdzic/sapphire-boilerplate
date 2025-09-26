@@ -72,12 +72,12 @@ import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
 @ApplyOptions<ExtendedCommand.Options>({
   description: 'Command description here'
 })
-export class CommandName extends ExtendedCommand {
-  override registerApplicationCommands(registry: ApplicationCommandRegistry): void {
+export class BotCommand extends ExtendedCommand {
+  override registerApplicationCommands(registry: ApplicationCommandRegistry) {
     // Command registration
   }
 
-  override async chatInputRun(interaction: ChatInputCommandInteraction): Promise<void> {
+  override async chatInputRun(interaction: ChatInputCommandInteraction) {
     // Command logic
   }
 }
