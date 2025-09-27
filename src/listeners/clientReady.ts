@@ -25,6 +25,7 @@ export class BotListener extends Listener<typeof Events.ClientReady> {
 
     if (!mainGuild) {
       this.container.logger.error('Main guild not found');
+
       process.exit(1);
     }
 

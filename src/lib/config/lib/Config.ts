@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { merge } from 'lodash';
 import type { ZodSchema } from 'zod';
-import { defaultConfigExtension } from '../constants';
+import { defaultConfigExtension } from '#lib/constants';
 
 export class Config<T> {
   readonly data: T;
