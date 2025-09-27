@@ -1,5 +1,5 @@
 ---
-globs: src/commands/*.ts,src/listeners/*.ts,src/preconditions/*.ts
+globs: src/commands/*.ts,src/listeners/*.ts,src/preconditions/*.ts,src/lib/utils/*.ts
 ---
 
 # Discord Bot Development Guidelines
@@ -9,8 +9,7 @@ globs: src/commands/*.ts,src/listeners/*.ts,src/preconditions/*.ts
 ### Client Configuration
 The bot is configured in [src/index.ts](mdc:src/index.ts) with:
 - **Intents**: Guilds, GuildMembers (add more as needed)
-- **Partials**: User, GuildMember, Channel, Message
-- **Timezone**: Europe/Sarajevo for cron tasks
+- **Partials**: User, GuildMember, Channel, Message (add more as needed)
 
 ### Interaction Handling
 
@@ -57,8 +56,7 @@ try {
   
   if (!interaction.replied && !interaction.deferred) {
     await interaction.reply({ 
-      content: 'An error occurred while processing your request.',
-      ephemeral: true 
+      content: 'An error occurred while processing your request.' 
     });
   }
 }

@@ -3,7 +3,7 @@ export function randomNumberBetween(min: number, max: number) {
 }
 
 export function formatNumber(num: number) {
-  return new Intl.NumberFormat('en-US').format(Math.floor(num));
+  return new Intl.NumberFormat('en-US').format(Math.floor(Number(num)));
 }
 
 export function formatOrdinal(num: number) {

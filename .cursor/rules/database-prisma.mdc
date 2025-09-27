@@ -14,13 +14,10 @@ globs: prisma/*,src/**/*database*.ts,src/**/*cooldown*.ts
 ### Schema Management
 ```bash
 # Generate Prisma client
-npx prisma generate
+bun prisma generate
 
-# Push schema changes (development)
-npx prisma db push
-
-# Create and apply migrations (production)
-npx prisma migrate dev --name migration_name
+# Push schema changes (development and production)
+bun prisma db push
 ```
 
 ## Database Patterns
@@ -42,9 +39,11 @@ try {
   const result = await prisma.model.create({
     data: { /* data */ }
   });
+
   return result;
 } catch (error) {
   this.container.logger.error('Database error:', error);
+
   throw new Error('Failed to create record');
 }
 ```
@@ -56,6 +55,7 @@ const result = await prisma.$transaction(async (tx) => {
   const profile = await tx.profile.create({ 
     data: { ...profileData, userId: user.id } 
   });
+  
   return { user, profile };
 });
 ```
@@ -93,8 +93,8 @@ Use for implementing command cooldowns and rate limiting.
 3. **Error Recovery**: Implement retry logic for transient failures
 
 ### Migration Strategy
-1. **Development**: Use `prisma db push` for rapid prototyping
-2. **Production**: Use `prisma migrate` for version-controlled changes
+1. **Development**: Use `prisma db push`
+2. **Production**: Use `prisma db push`
 3. **Backup**: Always backup database before migrations
 4. **Rollback**: Plan rollback strategies for failed migrations
 

@@ -25,7 +25,7 @@ export class BotCommand extends ExtendedCommand {
 
 ### Command Registration Pattern
 ```typescript
-override registerApplicationCommands(registry: ApplicationCommandRegistry): void {
+override registerApplicationCommands(registry: ApplicationCommandRegistry) {
   registry.registerChatInputCommand((builder) =>
     builder
       .setName(this.name)
@@ -46,7 +46,7 @@ Access the Sapphire container for shared resources:
 ### Preconditions
 Create preconditions in `src/preconditions/` for command restrictions:
 - Use `@ApplyOptions<PreconditionOptions>()`
-- Implement `chatInputRun()` or `contextMenuRun()`
+- Implement `chatInputRun()` or `contextMenuRun()` or `messageRun()`
 - Return `PreconditionResult` for pass/fail
 
 ### Listeners
@@ -64,7 +64,7 @@ Create event listeners in `src/listeners/`:
 
 The bot uses these Sapphire plugins:
 - `@sapphire/plugin-logger` - Structured logging
-- `@kingsworld/plugin-cron` - Scheduled tasks
+- `@kingsworld/plugin-cron` - Cron tasks
 
 Register plugins in [src/lib/register.ts](mdc:src/lib/register.ts) and configure them as needed.
 

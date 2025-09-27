@@ -13,7 +13,7 @@ import {
 
 export class ExtendedCommand extends Command {
   override chatInputRun?(
-    interaction: ChatInputCommand.Interaction,
+    interaction: ChatInputCommand.Interaction<'cached'>,
     context: ChatInputCommand.RunContext
   ): Awaitable<unknown>;
 }

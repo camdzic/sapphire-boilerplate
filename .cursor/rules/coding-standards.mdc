@@ -1,7 +1,7 @@
 ---
-globs: *.ts,*.tsx,*.js,*.jsx
+globs: *.ts
+alwaysApply: false
 ---
-
 # Coding Standards and Style Guide
 
 ## Code Style (Biome Configuration)
@@ -77,7 +77,7 @@ export class BotCommand extends ExtendedCommand {
     // Command registration
   }
 
-  override async chatInputRun(interaction: ChatInputCommandInteraction) {
+  override async chatInputRun(interaction: ChatInputCommand.Interaction<'cached'>) {
     // Command logic
   }
 }

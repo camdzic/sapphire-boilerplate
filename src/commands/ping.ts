@@ -1,6 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import type { ApplicationCommandRegistry } from '@sapphire/framework';
-import type { ChatInputCommandInteraction } from 'discord.js';
+import type { ApplicationCommandRegistry, ChatInputCommand } from '@sapphire/framework';
 import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
 
 @ApplyOptions<ExtendedCommand.Options>({
@@ -13,7 +12,7 @@ export class BotCommand extends ExtendedCommand {
     );
   }
 
-  override async chatInputRun(interaction: ChatInputCommandInteraction) {
+  override async chatInputRun(interaction: ChatInputCommand.Interaction<'cached'>) {
     const pingInteraction = await interaction.reply({
       content: 'Pong! 🏓',
       withResponse: true
