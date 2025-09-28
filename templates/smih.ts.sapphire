@@ -1,0 +1,28 @@
+{
+  "category": "interaction-handlers"
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
+import type { AnySelectMenuInteraction, StringSelectMenuInteraction } from 'discord.js';
+
+@ApplyOptions<InteractionHandler.Options>({
+  interactionHandlerType: InteractionHandlerTypes.SelectMenu
+})
+export class BotInteractionHandler extends InteractionHandler {
+  override parse(interaction: AnySelectMenuInteraction) {
+    if (!interaction.inCachedGuild() || !interaction.isStringSelectMenu()) {
+      return this.none();
+    }
+
+    if (interaction.customId === this.name) {
+      return this.some();
+    }
+
+    return this.none();
+  }
+
+  override run(interaction: StringSelectMenuInteraction<'cached'>) {
+    return interaction.reply({});
+  }
+}

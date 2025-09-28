@@ -1,0 +1,10 @@
+{
+  "category": "listeners"
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { type Events, Listener } from '@sapphire/framework';
+
+@ApplyOptions<Listener.Options>({})
+export class BotListener extends Listener<typeof Events.> {
+}

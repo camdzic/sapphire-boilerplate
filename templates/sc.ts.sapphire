@@ -1,0 +1,22 @@
+{
+  "category": "commands"
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import type { ApplicationCommandRegistry, ChatInputCommand } from '@sapphire/framework';
+import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
+
+@ApplyOptions<ExtendedCommand.Options>({
+  description: ''
+})
+export class BotCommand extends ExtendedCommand {
+  override registerApplicationCommands(registry: ApplicationCommandRegistry) {
+    registry.registerChatInputCommand((builder) =>
+      builder.setName(this.name).setDescription(this.description)
+    );
+  }
+
+  override chatInputRun(interaction: ChatInputCommand.Interaction<'cached'>) {
+    return interaction.reply({});
+  }
+}

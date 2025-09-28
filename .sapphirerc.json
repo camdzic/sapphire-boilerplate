@@ -1,0 +1,17 @@
+{
+  "projectLanguage": "ts",
+  "locations": {
+    "base": "src",
+    "arguments": "arguments",
+    "commands": "commands",
+    "listeners": "listeners",
+    "preconditions": "preconditions",
+    "interaction-handlers": "interaction-handlers",
+    "cron-tasks": "cron-tasks",
+    "routes": ""
+  },
+  "customFileTemplates": {
+    "enabled": true,
+    "location": "templates"
+  }
+}

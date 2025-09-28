@@ -25,6 +25,7 @@
   "dependencies": {
     "@kingsworld/plugin-cron": "^3.0.5",
     "@prisma/client": "^6.16.2",
+    "@sapphire/cli": "^1.9.3",
     "@sapphire/decorators": "^6.2.0",
     "@sapphire/framework": "^5.3.6",
     "@sapphire/plugin-logger": "^4.1.0",

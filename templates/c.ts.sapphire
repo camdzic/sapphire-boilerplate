@@ -1,0 +1,13 @@
+{
+  "category": "cron-tasks"
+}
+---
+import { CronTask } from '@kingsworld/plugin-cron';
+import { ApplyOptions } from '@sapphire/decorators';
+
+@ApplyOptions<CronTask.Options>({
+  pattern: '' // Every
+})
+export class BotCronTask extends CronTask {
+  override run() {}
+}

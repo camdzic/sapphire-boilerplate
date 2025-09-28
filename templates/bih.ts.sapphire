@@ -1,0 +1,28 @@
+{
+  "category": "interaction-handlers"
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
+import type { ButtonInteraction } from 'discord.js';
+
+@ApplyOptions<InteractionHandler.Options>({
+  interactionHandlerType: InteractionHandlerTypes.Button
+})
+export class BotInteractionHandler extends InteractionHandler {
+  override parse(interaction: ButtonInteraction) {
+    if (!interaction.inCachedGuild()) {
+      return this.none();
+    }
+
+    if (interaction.customId === this.name) {
+      return this.some();
+    }
+
+    return this.none();
+  }
+
+  override run(interaction: ButtonInteraction<'cached'>) {
+    return interaction.reply({});
+  }
+}
