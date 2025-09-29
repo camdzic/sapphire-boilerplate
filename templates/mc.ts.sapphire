@@ -1,0 +1,16 @@
+{
+  "category": "commands"
+}
+---
+import { ApplyOptions } from '@sapphire/decorators';
+import type { Message } from 'discord.js';
+import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
+
+@ApplyOptions<ExtendedCommand.Options>({
+  description: ''
+})
+export class BotCommand extends ExtendedCommand {
+  override messageRun(message: Message) {
+    return message.reply({});
+  }
+}
