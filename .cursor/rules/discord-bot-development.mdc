@@ -1,94 +1,54 @@
 ---
-globs: src/commands/*.ts,src/listeners/*.ts,src/preconditions/*.ts,src/lib/utils/*.ts
+alwaysApply: true
 ---
 
-# Discord Bot Development Guidelines
+# Discord Bot Development
 
-## Discord.js Integration
+## Framework
+- This project uses **Sapphire Framework** for Discord.js
+- Follow Sapphire's patterns and conventions
+- Use decorators provided by `@sapphire/decorators` (e.g., `@ApplyOptions`)
 
-### Client Configuration
-The bot is configured in [src/index.ts](mdc:src/index.ts) with:
-- **Intents**: Guilds, GuildMembers (add more as needed)
-- **Partials**: User, GuildMember, Channel, Message (add more as needed)
+## Commands
+- All commands should extend `ExtendedCommand` from `#lib/extensions/ExtendedCommand`
+- Use `@ApplyOptions` to configure command options
+- Commands should be in the `src/commands/` directory
+- Register application commands in `registerApplicationCommands`
+- Use `chatInputRun` for slash command handling
+- Always use the `'cached'` interaction type: `ChatInputCommand.Interaction<'cached'>`
+- Prefer early returns for error cases
 
-### Interaction Handling
+## Preconditions
+- Preconditions should extend `Precondition` from `@sapphire/framework`
+- Use `@ApplyOptions` to configure position and other options
+- Place in `src/preconditions/` directory
+- Use `chatInputRun` for interaction-based preconditions
+- Return `this.ok()` for success and `this.error()` for failure
 
-#### Slash Commands
-- Always use `ChatInputCommandInteraction` type
-- Respond with `interaction.reply()` for initial response
-- Use `interaction.editReply()` for updates
-- Handle `withResponse: true` for ping/latency commands
+## Listeners
+- Listeners should be in `src/listeners/` directory
+- Use appropriate event listener methods (e.g., `once`, `on`)
+- Use decorators to register listeners automatically
 
-#### Response Patterns
-```typescript
-// Initial response
-await interaction.reply({ content: 'Processing...' });
+## Interactions
+- Always check for `'cached'` guild when accessing guild data
+- Handle all interaction reply types appropriately
+- Use `deferReply` for operations that take longer than 3 seconds
 
-// Edit response
-await interaction.editReply({ content: 'Updated content' });
+## Discord.js Patterns
+- Use type-safe interaction guards (e.g., `interaction.inCachedGuild()`)
+- Prefer modern Discord.js features and APIs
+- Use Gateway Intents appropriately
+- Configure Partials for needed data types
 
-// Deferred response
-await interaction.deferReply();
-await interaction.editReply({ content: 'Result' });
-```
+## Utilities
+- Utility functions are in `src/lib/utils/`
+- Export all utilities from `src/lib/utils/index.ts`
+- Use path alias `#utils/*` to import utilities
+- Organize utilities by category (discord, formatting, database, etc.)
 
-### Embed and Component Utilities
-
-Use the utility functions in `src/lib/utils/discord/`:
-- [actionRow.ts](mdc:src/lib/utils/discord/actionRow.ts) - Action row builders
-- [embed.ts](mdc:src/lib/utils/discord/embed.ts) - Embed builders
-- [resolver.ts](mdc:src/lib/utils/discord/resolver.ts) - Data resolvers
-
-### Command Registration
-
-Commands are registered per-guild by default:
-- Set `GUILD_ID` environment variable for development
-- Use `RegisterBehavior.BulkOverwrite` for production
-
-### Error Handling
-
-#### Interaction Errors
-```typescript
-try {
-  await interaction.reply({ content: 'Success' });
-} catch (error) {
-  this.container.logger.error('Command error:', error);
-  
-  if (!interaction.replied && !interaction.deferred) {
-    await interaction.reply({ 
-      content: 'An error occurred while processing your request.' 
-    });
-  }
-}
-```
-
-#### Rate Limiting
-- Respect Discord's rate limits
-- Implement proper error handling for 429 responses
-- Use cooldowns for expensive operations
-
-### Best Practices
-
-1. **Permissions**: Always check bot permissions before operations
-2. **Ephemeral Responses**: Use ephemeral for user-specific data
-3. **Input Validation**: Validate user input before processing
-4. **Logging**: Log important events and errors
-5. **Timeouts**: Handle interaction timeouts (15 minutes)
-6. **Deferrals**: Defer long-running operations
-7. **Error Messages**: Provide user-friendly error messages
-
-### Security Considerations
-
-1. **User Input**: Sanitize and validate all user input
-2. **Permissions**: Check user permissions before sensitive operations
-3. **Rate Limiting**: Implement reasonable rate limits
-4. **Data Privacy**: Handle user data responsibly
-5. **Environment Variables**: Keep sensitive data in environment variables
-
-### Performance Tips
-
-1. **Database Queries**: Optimize database operations
-2. **Caching**: Cache frequently accessed data
-3. **Batch Operations**: Use batch operations when possible
-4. **Lazy Loading**: Load data only when needed
-5. **Memory Management**: Properly dispose of resources
+## Configuration
+- Use the Config class from `#lib/config/lib/Config` for configuration
+- Configuration files are in `config/` directory
+- Use Zod schemas for configuration validation
+- Register configuration in `src/lib/config/register.ts`

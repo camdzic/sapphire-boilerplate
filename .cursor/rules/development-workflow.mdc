@@ -1,85 +1,64 @@
 ---
-description: Development workflow, tooling, and environment setup
+alwaysApply: true
 ---
 
-# Development Workflow and Tooling
+# Development Workflow
 
-## Development Environment
+## Setup
+- Install dependencies: `bun install`
+- Generate Prisma client: `bun prisma generate`
+- Copy `.env.example` to `.env` and configure (if exists)
 
-### Runtime and Package Manager
-- **Runtime**: Bun (JavaScript runtime and package manager)
-- **Start Command**: `bun run src/index.ts`
-- **Development**: `bun run --watch src/index.ts` (auto-reload)
-- **Linting**: `bun run biome` (check and fix)
+## Development
+- Run dev mode: `bun dev` (watches for changes)
+- Run production: `bun start`
+- Use Biome for formatting: `bun biome` (runs check --write)
 
-### Git Hooks
-- **Lefthook**: Configured in [lefthook.yml](mdc:lefthook.yml)
-- Pre-commit hooks for code quality
-- Automated linting and formatting
+## Git Hooks
+- Lefthook is configured for pre-commit hooks
+- Automatically runs Biome formatting and linting
+- Hooks can be bypassed with `--no-verify` (not recommended)
 
-## Code Quality Tools
+## Code Quality
+- Biome handles formatting and linting
+- Follow Biome rules configured in `biome.json`
+- Format code before committing
+- Fix linting errors before committing
+- Ensure no TypeScript errors before committing
 
-### Biome Configuration
-- **Formatter**: 2 spaces, 100 char width, single quotes, semicolons
-- **Linter**: Strict rules for unused imports, floating promises, etc.
-- **Auto-fix**: Run `bun run biome` to automatically fix issues
+## Testing
+- Test commands in a development server
+- Use Discord's test guild feature
+- Verify error handling
+- Check edge cases
 
-### TypeScript Configuration
-- **Strict Mode**: Enabled with proper type checking
-- **Path Mapping**: Use `#lib/*` and `#utils/*` aliases
-- **Decorators**: Experimental decorators enabled for Sapphire
+## Configuration Changes
+- Edit configuration schema in `src/lib/config/schemas/`
+- Update default config if needed
+- Config files auto-merge with defaults on load
+- Changes to schemas require validation
 
-## Project Scripts
+## Adding New Features
+1. Create appropriate piece (command, listener, precondition)
+2. Follow naming conventions
+3. Export from appropriate directories
+4. Register if manual registration needed
+5. Test thoroughly
+6. Run Biome formatter
 
-```bash
-# Development
-bun run dev          # Start with auto-reload
-bun run start        # Production start
-bun run biome        # Lint and format code
+## Debugging
+- Use `@sapphire/plugin-logger` for logging
+- Check console for errors
+- Verify Prisma client is generated
+- Ensure database exists and is migrated
+- Check environment variables
 
-# Database
-bun prisma generate  # Generate Prisma client
-bun prisma db push   # Push schema changes
-bun prisma studio    # Database GUI
-```
+## Common Tasks
+- Add command: `bun sapphire generate <component> <name>` or manually create in `src/commands/`
+- Add listener: `bun sapphire generate <component> <name>` or manually create in `src/listeners/`
+- Add precondition: Create file in `src/preconditions/`
+- Add utility: Create in appropriate `src/lib/utils/<category>/`
+- Format code: `bun biome`
 
-## Environment Setup
-
-### Required Environment Variables
-- `GUILD_ID` - Discord guild ID for command registration
-- Database connection (if not using default SQLite)
-
-### Development Best Practices
-1. **Hot Reload**: Use `bun run dev` for development
-2. **Code Quality**: Run `bun run biome` before commits
-3. **Database**: Use Prisma Studio for database inspection
-4. **Logging**: Check console output for debugging
-5. **Testing**: Test commands in Discord before deployment
-
-## File Organization
-
-### Command Structure
-```
-src/commands/
-├── ping.ts           # Example command
-└── category/         # Group related commands
-    ├── command1.ts
-    └── command2.ts
-```
-
-### Utility Organization
-```
-src/lib/utils/
-├── discord/          # Discord-specific utilities
-├── database/         # Database utilities
-├── formatting/       # Text/formatting utilities
-└── index.ts         # Utility exports
-```
-
-## Deployment Considerations
-
-1. **Environment**: Set production environment variables
-2. **Database**: Migrate to production database (PostgreSQL recommended)
-3. **Logging**: Configure proper logging levels
-4. **Monitoring**: Set up error tracking and monitoring
-5. **Scaling**: Consider horizontal scaling for large bots
+## Code Generation
+- Use Sapphire CLI templates from `templates/`

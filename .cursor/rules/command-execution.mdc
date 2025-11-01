@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+---
+
+# Command Execution
+
+## NEVER Run These Commands
+- **`bun start`**: NEVER run the bot in production mode
+- **`bun dev`**: NEVER run the bot in development mode
+- **`bun prisma migrate dev`**: NEVER create migrations
+- **`bun prisma migrate deploy`**: NEVER deploy migrations
+- **`bun prisma db push`**: NEVER push schema changes directly to database
+- **`bun prisma db pull`**: NEVER pull schema from database
+- **`bun prisma studio`**: NEVER open Prisma Studio
+
+## The ONLY Prisma Command Allowed
+- **`bun prisma generate`**: ONLY allowed command after editing `prisma/schema.prisma`
+  - Run this immediately after any changes to the Prisma schema
+  - This regenerates the Prisma client with updated types
+
+## What Cursor Should Do
+- Edit code files normally
+- Make schema changes in `prisma/schema.prisma`
+- Run `bun prisma generate` after schema changes
+- Never assume the user wants to start/stop the bot
+- Never create or modify migrations
+- Let the user control bot execution and database migrations manually
+
+## Rationale
+- Bot execution should be controlled by the user in their terminal
+- Migrations require user decision and context
+- Prisma client generation is the only safe automated operation
+- Avoid interfering with the user's development workflow

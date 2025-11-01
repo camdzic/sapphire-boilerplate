@@ -2,37 +2,63 @@
 alwaysApply: true
 ---
 
-# Sapphire Discord Bot Boilerplate - Project Structure
+# Project Structure
 
-This is a Discord bot built with the Sapphire framework using TypeScript, Bun, and Prisma.
+## Directory Organization
 
-## Core Architecture
+### Source Code (`src/`)
+- **commands/**: All bot commands (slash commands, context menus, etc.)
+- **listeners/**: Event listeners for Discord.js and Sapphire events
+- **preconditions/**: Command preconditions for access control
+- **lib/**: Shared libraries and utilities
+  - **config/**: Configuration system (Config class, schemas, registration)
+  - **extensions/**: Extended classes (e.g., ExtendedCommand)
+  - **utils/**: Utility functions organized by category
+    - **concurrency/**: Concurrency utilities (mutex, etc.)
+    - **database/**: Database helpers
+    - **discord/**: Discord.js utilities
+    - **formatting/**: Formatting utilities
+- **index.ts**: Main entry point (client initialization)
 
-- **Entry Point**: [src/index.ts](mdc:src/index.ts) - Main application entry point with SapphireClient setup
-- **Framework Setup**: [src/lib/register.ts](mdc:src/lib/register.ts) - Registers plugins, database, and command registries
-- **Extended Command**: [src/lib/extensions/ExtendedCommand.ts](mdc:src/lib/extensions/ExtendedCommand.ts) - Base command class for all bot commands
+### Configuration (`config/`)
+- JSON/YAML configuration files
+- Settings for bot behavior
 
-## Directory Structure
+### Database (`prisma/`)
+- **schema.prisma**: Database schema definition
+- **database.db**: SQLite database file
 
-- `src/commands/` - Bot slash commands (extend ExtendedCommand)
-- `src/listeners/` - Discord.js event listeners
-- `src/preconditions/` - Command preconditions (permissions, cooldowns, etc.)
-- `src/lib/config/` - Configuration management with Zod schemas
-- `src/lib/utils/` - Utility functions (Discord, formatting, database helpers)
-- `prisma/` - Database schema and migrations
-- `config/` - Bot configuration files
+### Templates (`templates/`)
+- Sapphire CLI templates for generating new pieces
 
-## Key Dependencies
+### Build Artifacts
+- **node_modules/**: Dependencies
 
-- **Framework**: @sapphire/framework (Discord bot framework)
-- **Runtime**: Bun (JavaScript runtime)
-- **Database**: Prisma with SQLite
-- **Linting**: Biome (formatter and linter)
-- **Validation**: Zod (schema validation)
+## Path Aliases (tsconfig.json)
+- `#*`: Maps to `./src/*`
+- `#lib/*`: Maps to `./src/lib/*`
+- `#utils/*`: Maps to `./src/lib/utils/*`
 
-## Path Mapping
+## Import Organization
+1. External packages (npm packages, Discord.js, Sapphire, etc.)
+2. Path-aliased internal imports (`#lib`, `#utils`)
+3. Relative imports (for same directory or nearby files)
 
-Use these path aliases in imports:
-- `#lib/*` → `src/lib/*`
-- `#utils/*` → `src/lib/utils/*`
-- `#*` → `src/*`
+## Registration
+- All pieces are auto-registered by Sapphire
+- Manual registration in `src/lib/register.ts` if needed
+- Config registration in `src/lib/config/register.ts`
+
+## Configuration Files
+- `package.json`: Dependencies and scripts
+- `tsconfig.json`: TypeScript configuration
+- `biome.json`: Biome formatter and linter configuration
+- `lefthook.yml`: Git hooks configuration
+- `prisma/schema.prisma`: Database schema
+
+## Code Organization Principles
+- Keep related code together
+- Use barrel exports (index.ts) for clean imports
+- Separate concerns by directory
+- Keep files focused on a single purpose
+- Use utilities for reusable logic
