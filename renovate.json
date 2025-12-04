@@ -1,6 +1,30 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>sapphiredev/.github:sapphire-renovate"],
+  "extends": [
+    "config:recommended",
+    "abandonments:recommended",
+    "group:allNonMajor",
+    "helpers:pinGitHubActionDigests",
+    ":automergeMinor",
+    ":configMigration",
+    ":gitSignOff"
+  ],
+  "assignees": ["camdzic"],
+  "labels": ["dependencies"],
   "schedule": [],
-  "ignoreDeps": ["@types/bun", "typescript", "prisma", "@prisma/client"]
+  "ignoreDeps": ["@types/bun", "typescript", "prisma", "@prisma/client"],
+  "automergeStrategy": "squash",
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "npm": {
+    "rangeStrategy": "bump"
+  },
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "groupName": "vulnerability alerts",
+    "schedule": ["at any time"],
+    "enabled": true,
+    "labels": ["security"],
+    "automerge": true
+  }
 }
