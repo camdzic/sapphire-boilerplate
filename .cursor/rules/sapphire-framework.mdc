@@ -1,61 +1,94 @@
 ---
-alwaysApply: true
+description: Sapphire framework patterns for Discord bot development
+globs: **/*.ts
+alwaysApply: false
 ---
 
-# Sapphire Framework
+# Sapphire Framework Patterns
 
-## Project Structure
-- Commands: `src/commands/`
-- Listeners: `src/listeners/`
-- Preconditions: `src/preconditions/`
-- Utilities: `src/lib/utils/`
-- Config: `src/lib/config/`
-- Extensions: `src/lib/extensions/`
+## Commands
 
-## Key Patterns
+- Extend `ExtendedCommand` (custom base class) not `Command` directly
+- Use `@ApplyOptions<ExtendedCommand.Options>()` decorator for configuration
+- Override `registerApplicationCommands()` to register slash commands
+- Use `override` keyword on all overridden methods
 
-### Client Setup
-- Client is configured in `src/index.ts`
-- Import `#lib/register` first to register all pieces
-- Use `@sapphire/framework` for core functionality
-- Extend `SapphireClient` for custom functionality
+```typescript
+@ApplyOptions<ExtendedCommand.Options>({
+  description: "Command description"
+})
+export class PingCommand extends ExtendedCommand {
+  override registerApplicationCommands(registry: ApplicationCommandRegistry) {
+    registry.registerChatInputCommand((builder) =>
+      builder.setName('ping').setDescription(this.description)
+    );
+  }
 
-### Pieces (Commands, Listeners, Preconditions)
-- All pieces are auto-loaded from their directories
-- Use decorators for configuration instead of registry methods
-- Prefer `@ApplyOptions` for setting options
-- Register application commands in `registerApplicationCommands` for slash commands
+  override async chatInputRun(interaction: ChatInputCommand.Interaction<'cached'>) {
+    // Command logic
+  }
+}
+```
 
-### Dependency Injection
-- Use `this.container` to access registered services
-- Access client via `this.container.client`
-- Use `this.store` to access other pieces
-- Access database via `this.container.prisma` (if registered)
+## Listeners
 
-### Command Execution
-- Use typed interaction contexts
-- Always use cached variants when possible
-- Handle errors gracefully and provide user feedback
-- Use preconditions for command restrictions
+- Extend `Listener<typeof Events.EventName>` with specific event type
+- Use `@ApplyOptions<Listener.Options>({ once: true })` for one-time listeners
+- Use `override run()` method
 
-### Error Handling
-- Use Sapphire's Result types where applicable
-- Return errors using `this.error()` in preconditions
-- Use try-catch for expected errors in commands
-- Let Sapphire handle unhandled errors with its error listener
+```typescript
+@ApplyOptions<Listener.Options>({ once: true })
+export class ClientReadyListener extends Listener<typeof Events.ClientReady> {
+  override async run() {
+    // Listener logic
+  }
+}
+```
 
-### Caching and State
-- Use framework's caching mechanisms
-- Be mindful of memory usage with large servers
-- Configure Intents and Partials appropriately
+## Preconditions
 
-### Plugin Integration
-- Cron tasks: Use `@kingsworld/plugin-cron`
-- Logger: Use `@sapphire/plugin-logger`
-- Register plugins in client options or through decorators
+- Extend `Precondition` class
+- Return `this.ok()` for success or `this.error()` for failure
+- Use `context` parameter for passing data
 
-### Type Safety
-- Use TypeScript strict mode
-- Leverage Sapphire's type inference
-- Use generics for piece options
-- Trust compiler inference for return types
+```typescript
+export class CachedGuildOnlyPrecondition extends Precondition {
+  override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
+    if (interaction.inCachedGuild()) {
+      return this.ok();
+    }
+    return this.error({ message: 'This command can only be used in a server' });
+  }
+}
+```
+
+## Container Access
+
+- Access dependencies via `this.container` (logger, config, prisma)
+- Container is typed via module augmentation in `global.d.ts`
+
+## Discord UI Helpers
+
+Use the project's utility functions, NOT raw Discord.js builders directly:
+
+### Embeds
+```typescript
+import { primaryEmbed, baseEmbed, successEmbed, errorEmbed } from '#utils/discord/embed';
+
+primaryEmbed();                           // Embed with primary color
+baseEmbed(title, description, color);     // Base embed builder
+successEmbed('Message saved!');             // ✅ Success embed
+errorEmbed('Something went wrong');         // ❌ Error embed
+```
+
+### Components
+```typescript
+import { button, selectMenu, modal } from '#utils/discord/actionRow';
+
+button({ label: 'Click', style: ButtonStyle.Primary, customId: 'btn' });
+selectMenu('string', { placeholder: 'Select', options: [...] });
+modal('My Modal', 'modal-id', { label: 'Name', customId: 'name', style: TextInputStyle.Short });
+```
+
+### Interaction Types
+- Prefer cached guild interactions: `ChatInputCommand.Interaction<'cached'>`

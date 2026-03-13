@@ -78,7 +78,10 @@ export async function getUser(userId: string) {
   }
 }
 
-export async function getMember(userId: string, guildId = process.env.GUILD_ID) {
+export async function getMember(
+  userId: string,
+  guildId = process.env.GUILD_ID
+) {
   try {
     const guild = await getGuild(guildId);
 

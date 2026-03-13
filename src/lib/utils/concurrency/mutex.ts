@@ -43,7 +43,7 @@ function acquireMutex(lockKey: string) {
 function releaseMutex(lockKey: string) {
   const waitingQueue = waitingQueues.get(lockKey);
 
-  if (!waitingQueue || !waitingQueue.length) {
+  if (!waitingQueue || waitingQueue.length === 0) {
     lockSet.delete(lockKey);
     waitingQueues.delete(lockKey);
 

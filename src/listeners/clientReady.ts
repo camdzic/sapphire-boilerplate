@@ -1,5 +1,9 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { type Events, Listener, type StoreRegistryValue } from '@sapphire/framework';
+import {
+  type Events,
+  Listener,
+  type StoreRegistryValue
+} from '@sapphire/framework';
 import { blue, gray } from 'colorette';
 import { getGuild, getMembers } from '#lib/utils';
 
@@ -31,7 +35,9 @@ export class BotListener extends Listener<typeof Events.ClientReady> {
 
     const members = await getMembers();
 
-    this.container.logger.info(`Fetched ${members.length} members from the main guild`);
+    this.container.logger.info(
+      `Fetched ${members.length} members from the main guild`
+    );
   }
 
   private printStoreDebugInformation() {

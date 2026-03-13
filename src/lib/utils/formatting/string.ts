@@ -24,9 +24,21 @@ export function pluralizeString(str: string, count: number) {
   return count === 1 ? str : `${str}s`;
 }
 
-export function extractCustomIdPart(customId: string, asNumber?: false, index?: number): string;
-export function extractCustomIdPart(customId: string, asNumber?: true, index?: number): number;
-export function extractCustomIdPart(customId: string, asNumber = false, index = 0) {
+export function extractCustomIdPart(
+  customId: string,
+  asNumber?: false,
+  index?: number
+): string;
+export function extractCustomIdPart(
+  customId: string,
+  asNumber?: true,
+  index?: number
+): number;
+export function extractCustomIdPart(
+  customId: string,
+  asNumber = false,
+  index = 0
+) {
   const parts = customId.split('.');
   const part = parts[index + 1];
 

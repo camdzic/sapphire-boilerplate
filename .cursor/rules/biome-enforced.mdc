@@ -1,0 +1,69 @@
+---
+description: Biome linter enforced rules
+globs: **/*.ts
+alwaysApply: true
+---
+
+# Biome Enforced Rules
+
+These rules are enforced by Biome and will error if violated.
+
+## Formatting
+
+- Single quotes: `'string'` not `"string"`
+- Semicolons: always required
+- Trailing commas: none allowed
+- Line endings: LF (Unix-style)
+- Indentation: 2 spaces
+
+## Lint Rules
+
+### No forEach
+Use `for...of` instead of `.forEach()`
+
+### Use Template Literals
+Use `` `Hello ${name}` `` instead of `'Hello ' + name`
+
+### No Floating Promises
+All promises must be handled with `await` or `.catch()`
+
+### No Unused Imports/Variables
+Remove unused code - these are errors, not warnings
+
+### Use Await
+Always use `await` for async operations
+
+### Use Date.now()
+Use `Date.now()` instead of `new Date().getTime()`
+
+### No Unused Template Literal
+Don't use template literals without interpolation: `'hello'` not `` `hello` ``
+
+### Use Block Statements
+Always use braces, even for single-line blocks:
+
+```typescript
+// Good
+if (condition) {
+  return value;
+}
+
+// Bad
+if (condition) return value;
+```
+
+### Explicit Length Check
+Always use explicit comparisons:
+
+```typescript
+// Good
+if (array.length === 0)
+if (array.length > 0)
+
+// Bad
+if (!array.length)
+if (array.length)
+```
+
+### No Yoda Expressions
+Compare in natural order: `value === constant` not `constant === value`

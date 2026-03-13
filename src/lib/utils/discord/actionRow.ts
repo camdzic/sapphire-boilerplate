@@ -108,13 +108,21 @@ function createSelectMenu(
 ) {
   switch (type) {
     case 'string':
-      return new StringSelectMenuBuilder(selectMenu as Partial<StringSelectMenuComponentData>);
+      return new StringSelectMenuBuilder(
+        selectMenu as Partial<StringSelectMenuComponentData>
+      );
     case 'user':
-      return new UserSelectMenuBuilder(selectMenu as Partial<UserSelectMenuComponentData>);
+      return new UserSelectMenuBuilder(
+        selectMenu as Partial<UserSelectMenuComponentData>
+      );
     case 'channel':
-      return new ChannelSelectMenuBuilder(selectMenu as Partial<ChannelSelectMenuComponentData>);
+      return new ChannelSelectMenuBuilder(
+        selectMenu as Partial<ChannelSelectMenuComponentData>
+      );
     case 'role':
-      return new RoleSelectMenuBuilder(selectMenu as Partial<RoleSelectMenuComponentData>);
+      return new RoleSelectMenuBuilder(
+        selectMenu as Partial<RoleSelectMenuComponentData>
+      );
     case 'mentionable':
       return new MentionableSelectMenuBuilder(
         selectMenu as Partial<MentionableSelectMenuComponentData>

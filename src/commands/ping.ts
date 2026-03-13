@@ -1,5 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import type { ApplicationCommandRegistry, ChatInputCommand } from '@sapphire/framework';
+import type {
+  ApplicationCommandRegistry,
+  ChatInputCommand
+} from '@sapphire/framework';
 import { ExtendedCommand } from '#lib/extensions/ExtendedCommand';
 
 @ApplyOptions<ExtendedCommand.Options>({
@@ -12,7 +15,9 @@ export class BotCommand extends ExtendedCommand {
     );
   }
 
-  override async chatInputRun(interaction: ChatInputCommand.Interaction<'cached'>) {
+  override async chatInputRun(
+    interaction: ChatInputCommand.Interaction<'cached'>
+  ) {
     const pingInteraction = await interaction.reply({
       content: 'Pong! 🏓',
       withResponse: true
@@ -25,7 +30,8 @@ export class BotCommand extends ExtendedCommand {
     }
 
     const botLatency =
-      pingInteraction.resource.message.createdTimestamp - interaction.createdTimestamp;
+      pingInteraction.resource.message.createdTimestamp -
+      interaction.createdTimestamp;
     const wsLatency = Math.round(this.container.client.ws.ping);
 
     return interaction.editReply({

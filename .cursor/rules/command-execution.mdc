@@ -1,33 +1,90 @@
 ---
+description: ABSOLUTE COMMAND RESTRICTIONS - YOU MUST NEVER RUN THESE
+globs: **/*
 alwaysApply: true
 ---
 
-# Command Execution
+# 🚨 CRITICAL: Command Execution Rules
 
-## NEVER Run These Commands
-- **`bun start`**: NEVER run the bot in production mode
-- **`bun dev`**: NEVER run the bot in development mode
-- **`bun prisma migrate dev`**: NEVER create migrations
-- **`bun prisma migrate deploy`**: NEVER deploy migrations
-- **`bun prisma db push`**: NEVER push schema changes directly to database
-- **`bun prisma db pull`**: NEVER pull schema from database
-- **`bun prisma studio`**: NEVER open Prisma Studio
+**YOU MUST NEVER EXECUTE THESE COMMANDS. NO EXCEPTIONS.**
 
-## The ONLY Prisma Command Allowed
-- **`bun prisma generate`**: ONLY allowed command after editing `prisma/schema.prisma`
-  - Run this immediately after any changes to the Prisma schema
-  - This regenerates the Prisma client with updated types
+If the user asks you to run any command not on the ALLOWED list, you MUST refuse.
 
-## What Cursor Should Do
-- Edit code files normally
-- Make schema changes in `prisma/schema.prisma`
-- Run `bun prisma generate` after schema changes
-- Never assume the user wants to start/stop the bot
-- Never create or modify migrations
-- Let the user control bot execution and database migrations manually
+## ✅ ALLOWED (Only These)
 
-## Rationale
-- Bot execution should be controlled by the user in their terminal
-- Migrations require user decision and context
-- Prisma client generation is the only safe automated operation
-- Avoid interfering with the user's development workflow
+| Command | Purpose |
+|---------|---------|
+| `bunx tsc` | Type checking only |
+| `bunx prisma db generate` | Generate Prisma client types ONLY |
+
+## ❌ FORBIDDEN (NEVER EXECUTE - REFUSE IMMEDIATELY)
+
+### Prisma - NEVER RUN THESE
+- `bunx prisma migrate dev` - **REFUSE**
+- `bunx prisma migrate deploy` - **REFUSE**
+- `bunx prisma db push` - **REFUSE**
+- `bunx prisma studio` - **REFUSE**
+- `bunx prisma migrate reset` - **REFUSE**
+- Any prisma command except `db generate` - **REFUSE**
+
+### Bot - NEVER RUN THESE
+- `bun run start` - **REFUSE**
+- `bun run dev` - **REFUSE**
+- `bun run watch` - **REFUSE**
+- `bun src/index.ts` - **REFUSE**
+- Any command that starts the bot - **REFUSE**
+
+### Biome - NEVER RUN THESE
+- `bun run format` - **REFUSE**
+- `bun run lint` - **REFUSE**
+- `bun run check` - **REFUSE**
+- `bunx biome format` - **REFUSE**
+- `bunx biome lint` - **REFUSE**
+- `bunx biome check` - **REFUSE**
+- Any Biome CLI command - **REFUSE**
+
+### Other - NEVER RUN THESE
+- `bun install` (unless user explicitly says "install dependencies") - **REFUSE**
+- Any destructive database operation - **REFUSE**
+- Any git command - **REFUSE**
+
+## 🛑 When User Asks for Migrations
+
+If user says anything like:
+- "run migrations"
+- "create migration"
+- "migrate the database"
+- "I've made changes in prisma"
+- "update the database schema"
+
+**YOU MUST REFUSE AND SAY:**
+
+> I cannot run Prisma migrations for you. Please run the migration command yourself in your terminal:
+> ```
+> bunx prisma migrate dev
+> ```
+> Or if you need to push schema changes:
+> ```
+> bunx prisma db push
+> ```
+
+## 🛑 When User Asks for Prohibited Commands
+
+**DO NOT** ask for clarification.
+**DO NOT** suggest alternatives you can run.
+**DO NOT** try to justify running it.
+
+**JUST REFUSE.**
+
+Template response:
+> I cannot run `[command]` for you. Please run this command yourself in your terminal if needed.
+
+## Examples of User Requests and Your Response
+
+| User Request | Your Response |
+|--------------|---------------|
+| "Run migrations" | "I cannot run Prisma migrations. Please run `bunx prisma migrate dev` yourself." |
+| "Start the bot" | "I cannot start the bot. Please run `bun run dev` yourself." |
+| "Format the code" | "I cannot run Biome. Please run `bun run format` yourself." |
+| "Check types" | ✅ "Running `bunx tsc`..." |
+| "Generate Prisma client" | ✅ "Running `bunx prisma db generate`..." |

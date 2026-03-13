@@ -1,0 +1,58 @@
+---
+description: TypeScript coding standards and formatting rules
+globs: **/*.ts
+alwaysApply: true
+---
+
+# TypeScript Standards
+
+## Imports
+
+- Use `node:` prefix for Node.js built-in modules: `import { readFile } from 'node:fs'`
+- Use `type` keyword for type-only imports: `import type { ChatInputCommand } from '@sapphire/framework'`
+- Use path aliases for internal imports: `#lib/*`, `#utils/*`
+- Group imports: external packages first, then internal aliases, then relative paths
+
+## Formatting
+
+- Single quotes for strings: `'hello'` not `"hello"`
+- Semicolons always required at end of statements
+- No trailing commas in arrays/objects
+- 2-space indentation
+- Template literals for string interpolation: `` `Hello ${name}` ``
+- No string concatenation with `+`
+
+## Naming
+
+- Classes: PascalCase (`ExtendedCommand`, `EmbedBuilder`)
+- Functions: camelCase (`createMutex`, `formatMs`)
+- Variables: camelCase (`lockSet`, `botLatency`)
+- Constants: camelCase (`defaultConfigExtension`, `invisibleCharacter`)
+- Files: camelCase or PascalCase matching default export
+
+## Types
+
+- **NEVER add explicit return types when TypeScript can infer them** - only add types when inference fails
+- Use explicit `override` keyword when overriding parent methods
+- Use `type` imports for types: `import type { ColorResolvable }`
+- Avoid `any`, use `unknown` with type guards when needed
+- Leverage namespace types: `ChatInputCommand.Interaction<'cached'>`
+
+```typescript
+// ✅ GOOD - Let TypeScript infer
+function formatMs(ms: number) {
+  return `${ms}ms`;
+}
+
+// ❌ BAD - Unnecessary explicit return type
+function formatMs(ms: number): string {
+  return `${ms}ms`;
+}
+```
+
+## Code Style
+
+- Minimal comments - code should be self-documenting
+- No JSDoc comments
+- No useless comments like "// Import X" or "// Define function"
+- Use block statements with braces even for single-line conditionals

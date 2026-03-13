@@ -26,7 +26,9 @@ export class Config<T> {
 
   private resolveConfigPath(configPath: string) {
     const supportedExtensions = ['.json', '.yaml', '.yml'];
-    const hasExtension = supportedExtensions.some((ext) => configPath.toLowerCase().endsWith(ext));
+    const hasExtension = supportedExtensions.some((ext) =>
+      configPath.toLowerCase().endsWith(ext)
+    );
 
     if (!hasExtension) {
       return configPath + defaultConfigExtension;
@@ -82,7 +84,7 @@ export class Config<T> {
   }
 
   private validateConfigPath(configPath: string) {
-    if (!configPath || !configPath.trim().length) {
+    if (!configPath || configPath.trim().length === 0) {
       throw new Error('Config path cannot be empty');
     }
 
@@ -96,7 +98,9 @@ export class Config<T> {
     }
 
     const invalidChars = /[<>:"|?*]/;
-    const hasControlChars = configPath.split('').some((char) => char.charCodeAt(0) < 32);
+    const hasControlChars = configPath
+      .split('')
+      .some((char) => char.charCodeAt(0) < 32);
 
     if (invalidChars.test(configPath) || hasControlChars) {
       throw new Error('Config path contains invalid characters');
@@ -118,7 +122,9 @@ export class Config<T> {
       !configPath.includes('/') &&
       !configPath.includes('\\')
     ) {
-      throw new Error('Config path should include directory structure, not just filename');
+      throw new Error(
+        'Config path should include directory structure, not just filename'
+      );
     }
   }
 
@@ -150,7 +156,9 @@ export class Config<T> {
           return Bun.YAML.parse(rawData);
       }
     } catch (error) {
-      throw new Error(`Failed to read or parse config file at ${this.configPath}: ${error}`);
+      throw new Error(
+        `Failed to read or parse config file at ${this.configPath}: ${error}`
+      );
     }
   }
 
@@ -160,7 +168,9 @@ export class Config<T> {
 
       fs.writeFileSync(this.configPath, formattedConfig, 'utf-8');
     } catch (error) {
-      throw new Error(`Failed to write config file at ${this.configPath}: ${error}`);
+      throw new Error(
+        `Failed to write config file at ${this.configPath}: ${error}`
+      );
     }
   }
 

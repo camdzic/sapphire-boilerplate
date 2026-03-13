@@ -29,7 +29,7 @@ export function getUniqueArrayElements<T>(array: T[]) {
 }
 
 export function formatArray(array: string[], conjunction = 'and') {
-  if (!array.length) {
+  if (array.length === 0) {
     return '';
   }
 

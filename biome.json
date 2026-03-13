@@ -1,20 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "includes": [
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.js",
-      "**/*.jsx",
-      "**/*.cjs",
-      "**/*.mjs",
-      "**/*.json",
-      "!**/node_modules/**/*"
-    ]
+    "includes": ["**"],
+    "ignoreUnknown": true
   },
   "formatter": {
     "indentStyle": "space",
-    "lineWidth": 100,
     "lineEnding": "lf"
   },
   "javascript": {
@@ -45,6 +36,12 @@
           "level": "error",
           "fix": "safe",
           "options": {}
+        },
+        "noForEach": "error",
+        "noUselessSwitchCase": {
+          "level": "error",
+          "fix": "safe",
+          "options": {}
         }
       },
       "correctness": {
@@ -67,6 +64,11 @@
           "options": {}
         },
         "noUnusedTemplateLiteral": {
+          "level": "error",
+          "fix": "safe",
+          "options": {}
+        },
+        "useExplicitLengthCheck": {
           "level": "error",
           "fix": "safe",
           "options": {}

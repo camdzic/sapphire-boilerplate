@@ -1,0 +1,80 @@
+---
+description: Core code patterns and best practices
+globs: **/*.ts
+alwaysApply: true
+---
+
+# Code Patterns
+
+## Iteration
+
+- Use `for...of` loops, never `forEach()`
+- Use `for await...of` for async iteration
+
+```typescript
+// Good
+for (const item of items) {
+  await process(item);
+}
+
+// Bad
+items.forEach(async (item) => {
+  await process(item);
+});
+```
+
+## Error Handling
+
+- Global error handlers: attach to `process.on('unhandledRejection')` and `process.on('uncaughtException')`
+- Silent failures return `null` for Discord API calls (e.g., `getGuild()` returns `null` on fetch failure)
+- Throw descriptive errors for configuration/validation failures
+- Always handle promises with `await` or `.catch()` - no floating promises
+
+```typescript
+export async function getGuild(guildId = process.env.GUILD_ID) {
+  try {
+    return await container.client.guilds.fetch(guildId);
+  } catch {
+    return null;
+  }
+}
+```
+
+## Async Patterns
+
+- Use top-level `await` in entry points
+- Prefer `async/await` over raw Promise chains
+- Use `Date.now()` instead of `new Date().getTime()`
+
+## Arrays
+
+- Explicit length checks: `array.length === 0` not `!array.length`
+- Use `array.length > 0` for non-empty checks
+
+## Barrel Exports
+
+- Create index.ts files to re-export from subdirectories
+- Use `export * from './path'` syntax
+
+```typescript
+// src/lib/utils/index.ts
+export * from './concurrency/mutex';
+export * from './database/cooldown';
+export * from './discord/embed';
+```
+
+## Validation
+
+- Use Zod for schema validation
+- Create custom schemas with `z.custom<T>()` for complex types
+- Define schemas in separate files under `src/lib/config/schemas/`
+
+```typescript
+export const configSchema = z.object({
+  colors: z.object({
+    primary: colorResolvableSchema,
+    success: colorResolvableSchema,
+    error: colorResolvableSchema
+  })
+});
+```
