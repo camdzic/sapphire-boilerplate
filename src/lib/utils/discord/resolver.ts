@@ -19,7 +19,7 @@ export async function getChannel(channelId: string) {
 export async function getTextBasedChannel(channelId: string) {
   const channel = await getChannel(channelId);
 
-  if (!channel || !channel.isTextBased()) {
+  if (!channel?.isTextBased()) {
     return null;
   }
 
@@ -29,7 +29,7 @@ export async function getTextBasedChannel(channelId: string) {
 export async function getVoiceBasedChannel(channelId: string) {
   const channel = await getChannel(channelId);
 
-  if (!channel || !channel.isVoiceBased()) {
+  if (!channel?.isVoiceBased()) {
     return null;
   }
 
@@ -39,7 +39,7 @@ export async function getVoiceBasedChannel(channelId: string) {
 export async function getDMBasedChannel(channelId: string) {
   const channel = await getChannel(channelId);
 
-  if (!channel || !channel.isDMBased()) {
+  if (!channel?.isDMBased()) {
     return null;
   }
 
@@ -49,7 +49,7 @@ export async function getDMBasedChannel(channelId: string) {
 export async function getSendableChannel(channelId: string) {
   const channel = await getChannel(channelId);
 
-  if (!channel || !channel.isSendable()) {
+  if (!channel?.isSendable()) {
     return null;
   }
 

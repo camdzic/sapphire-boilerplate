@@ -23,7 +23,7 @@ export class BotCommand extends ExtendedCommand {
       withResponse: true
     });
 
-    if (!pingInteraction.resource || !pingInteraction.resource.message) {
+    if (!pingInteraction.resource?.message) {
       return interaction.editReply({
         content: 'Failed to get ping information'
       });
